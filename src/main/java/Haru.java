@@ -94,32 +94,38 @@ public class Haru {
                 }
             } catch (HaruException e) {
                 System.out.println(e.getMessage());
-            }
-            catch (NumberFormatException e) {
-                System.out.println("number was not given! :(");
+            } catch (NumberFormatException e) {
+                System.out.println("""
+                ____________________________________________________________
+                A number was not entered! :(
+                ____________________________________________________________
+                """);
             }
         }
     }
 
     public static void greet() {
-        System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Haru\nWhat can I do for you?");
-        System.out.println("____________________________________________________________\n");
+        System.out.println("""
+        ____________________________________________________________
+        Hello! I'm Haru
+        What can I do for you?
+        ____________________________________________________________
+        """);
     }
 
     public static void bye() {
-        System.out.println("____________________________________________________________");
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
+        System.out.println("""
+        ____________________________________________________________
+        Bye. Hope to see you again soon!
+        ____________________________________________________________
+        """);
     }
 
     public static void list(Task[] tasks) {
         System.out.println("____________________________________________________________");
         System.out.println("Here are the tasks that you've set:");
-        int i = 0;
-        while (tasks[i] != null) {
-            System.out.println((i+1) + ". " + tasks[i].getTaskInfo());
-            i++;
+        for (int i = 0; tasks[i] != null; i++) {
+            System.out.println((i + 1) + ". " + tasks[i].getTaskInfo());
         }
         System.out.println("____________________________________________________________\n");
     }
