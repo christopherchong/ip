@@ -1,24 +1,16 @@
 public class Task {
     protected String description;
-    protected boolean status;
+    protected boolean isDone;
     protected char type;
 
     public Task(String description, char type) {
         this.description = description;
-        this.status = false;
+        this.isDone = false;
         this.type = type;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public char getType() {
-        return type;
-    }
-
     public String getStatus() {
-        return (status ? "X" : " ");
+        return (isDone ? "X" : " ");
     }
 
     public String getTaskInfo() {
@@ -26,10 +18,10 @@ public class Task {
     }
 
     public void markDone() {
-        this.status = true;
+        this.isDone = true;
     }
 
     public void markUndone() {
-        this.status = false;
+        this.isDone = false;
     }
 }
