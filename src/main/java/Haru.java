@@ -104,24 +104,20 @@ public class Haru {
 
     public static void toDo(Task[] tasks, int taskCount, String taskDescription) {
         tasks[taskCount] = new Todo(taskDescription);
-        System.out.println("____________________________________________________________");
-        System.out.println("Got it. I've added this task:");
-        System.out.println(tasks[taskCount].getTaskInfo());
-        System.out.println("There are now " + (taskCount+1) + " task(s)!");
-        System.out.println("____________________________________________________________\n");
+        displayTask(tasks, taskCount);
     }
 
     public static void deadline(Task[] tasks, int taskCount, String description, String by) {
         tasks[taskCount] = new Deadline(description, by);
-        System.out.println("____________________________________________________________");
-        System.out.println("Got it. I've added this task:");
-        System.out.println(tasks[taskCount].getTaskInfo());
-        System.out.println("There are now " + (taskCount+1) + " task(s)!");
-        System.out.println("____________________________________________________________\n");
+        displayTask(tasks, taskCount);
     }
 
     public static void event(Task[] tasks, int taskCount, String description, String startDateTime, String endDateTime) {
         tasks[taskCount] = new Event(description, startDateTime, endDateTime);
+        displayTask(tasks, taskCount);
+    }
+
+    public static void displayTask(Task[] tasks, int taskCount) {
         System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(tasks[taskCount].getTaskInfo());
