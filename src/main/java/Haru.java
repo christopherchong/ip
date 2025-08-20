@@ -38,14 +38,20 @@ public class Haru {
                     taskCount++;
                     break;
                 case "deadline":
-                    String[] argumentsArray = arguments.split(" /by ", 2);
-                    String description = argumentsArray[0];
-                    String by = argumentsArray[1];
-                    deadline(tasks, taskCount, description, by);
+                    String[] deadlineArg = arguments.split(" /by ", 2);
+                    String deadlineDesc = deadlineArg[0];
+                    String by = deadlineArg[1];
+                    deadline(tasks, taskCount, deadlineDesc, by);
                     taskCount++;
                     break;
                 case "event":
-                    event(tasks, taskCount, arguments);
+                    String[] eventArg = arguments.split(" /from ", 2);
+                    String eventDesc = eventArg[0];
+                    String dates = eventArg[1];
+                    String[] datesArray = dates.split(" /to ", 2);
+                    String startDateTime = datesArray[0];
+                    String endDateTime = datesArray[1];
+                    event(tasks, taskCount, eventDesc, startDateTime, endDateTime);
                     taskCount++;
                     break;
                 case "bye":
@@ -108,14 +114,16 @@ public class Haru {
     public static void deadline(Task[] tasks, int taskCount, String description, String by) {
         tasks[taskCount] = new Deadline(description, by);
         System.out.println("____________________________________________________________");
+        System.out.println("Got it. I've added this task:");
         System.out.println(tasks[taskCount].getTaskInfo());
         System.out.println("There are now " + (taskCount+1) + " task(s)!");
         System.out.println("____________________________________________________________\n");
     }
 
-    public static void event(Task[] tasks, int taskCount, String taskDescription) {
-        tasks[taskCount] = new Event(taskDescription);
+    public static void event(Task[] tasks, int taskCount, String description, String startDateTime, String endDateTime) {
+        tasks[taskCount] = new Event(description, startDateTime, endDateTime);
         System.out.println("____________________________________________________________");
+        System.out.println("Got it. I've added this task:");
         System.out.println(tasks[taskCount].getTaskInfo());
         System.out.println("There are now " + (taskCount+1) + " task(s)!");
         System.out.println("____________________________________________________________\n");
