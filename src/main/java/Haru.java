@@ -4,7 +4,7 @@ public class Haru {
     public static void main(String[] args) {
         final int MAX_TASKS = 100;
         Task[] tasks = new Task[MAX_TASKS];
-        int task_count = 0;
+        int taskCount = 0;
         Scanner sc = new Scanner(System.in);
 
         greet();
@@ -33,13 +33,21 @@ public class Haru {
                 case "unmark":
                     unmark(tasks, arguments);
                     break;
+                case "todo":
+                    toDo(tasks, taskCount, arguments);
+                    taskCount++;
+                    break;
+                case "deadline":
+                    deadline(tasks, taskCount, arguments);
+                    taskCount++;
+                    break;
+                case "event":
+                    event(tasks, taskCount, arguments);
+                    taskCount++;
+                    break;
                 case "bye":
                     bye();
                     System.exit(0);
-                default:
-                    addTask(tasks, task_count, input);
-                    task_count++;
-                    break;
             }
         }
     }
@@ -61,34 +69,52 @@ public class Haru {
         System.out.println("Here are the tasks that you've set:");
         int i = 0;
         while (tasks[i] != null) {
-            System.out.println((i+1) + ". [" + tasks[i].getStatus() + "] " + tasks[i].getDescription());
+            System.out.println((i+1) + ". " + tasks[i].getTaskInfo());
             i++;
         }
         System.out.println("____________________________________________________________\n");
     }
 
-    public static void mark(Task[] tasks, String number) {
-        int taskNo = Integer.parseInt(number) - 1;
-        tasks[taskNo].markDone();
+    public static void mark(Task[] tasks, String taskNo) {
+        int taskIndex = Integer.parseInt(taskNo) - 1;
+        tasks[taskIndex].markDone();
         System.out.println("____________________________________________________________");
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println("[" + tasks[taskNo].getStatus() + "] " + tasks[taskNo].getDescription());
+        System.out.println(tasks[taskIndex].getTaskInfo());
         System.out.println("____________________________________________________________\n");
     }
 
     public static void unmark(Task[] tasks, String number) {
-        int taskNo = Integer.parseInt(number) - 1;
-        tasks[taskNo].markUndone();
+        int taskIndex = Integer.parseInt(number) - 1;
+        tasks[taskIndex].markUndone();
         System.out.println("____________________________________________________________");
         System.out.println("Got it! I've marked this task as not done yet:");
-        System.out.println("[" + tasks[taskNo].getStatus() + "] " + tasks[taskNo].getDescription());
+        System.out.println(tasks[taskIndex].getTaskInfo());
         System.out.println("____________________________________________________________\n");
     }
 
-    public static void addTask(Task[] tasks, int task_count, String input) {
-        tasks[task_count] = new Task(input);
+    public static void toDo(Task[] tasks, int taskCount, String taskDescription) {
+        tasks[taskCount] = new Todo(taskDescription);
         System.out.println("____________________________________________________________");
-        System.out.println("added: " + input);
+        System.out.println("Got it. I've added this task:");
+        System.out.println(tasks[taskCount].getTaskInfo());
+        System.out.println("There are now " + (taskCount+1) + " task(s)!");
+        System.out.println("____________________________________________________________\n");
+    }
+
+    public static void deadline(Task[] tasks, int taskCount, String taskDescription) {
+        tasks[taskCount] = new Deadline(taskDescription);
+        System.out.println("____________________________________________________________");
+        System.out.println(tasks[taskCount].getTaskInfo());
+        System.out.println("There are now " + (taskCount+1) + " task(s)!");
+        System.out.println("____________________________________________________________\n");
+    }
+
+    public static void event(Task[] tasks, int taskCount, String taskDescription) {
+        tasks[taskCount] = new Event(taskDescription);
+        System.out.println("____________________________________________________________");
+        System.out.println(tasks[taskCount].getTaskInfo());
+        System.out.println("There are now " + (taskCount+1) + " task(s)!");
         System.out.println("____________________________________________________________\n");
     }
 }
