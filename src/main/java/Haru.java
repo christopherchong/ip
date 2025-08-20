@@ -38,7 +38,10 @@ public class Haru {
                     taskCount++;
                     break;
                 case "deadline":
-                    deadline(tasks, taskCount, arguments);
+                    String[] argumentsArray = arguments.split(" /by ", 2);
+                    String description = argumentsArray[0];
+                    String by = argumentsArray[1];
+                    deadline(tasks, taskCount, description, by);
                     taskCount++;
                     break;
                 case "event":
@@ -102,8 +105,8 @@ public class Haru {
         System.out.println("____________________________________________________________\n");
     }
 
-    public static void deadline(Task[] tasks, int taskCount, String taskDescription) {
-        tasks[taskCount] = new Deadline(taskDescription);
+    public static void deadline(Task[] tasks, int taskCount, String description, String by) {
+        tasks[taskCount] = new Deadline(description, by);
         System.out.println("____________________________________________________________");
         System.out.println(tasks[taskCount].getTaskInfo());
         System.out.println("There are now " + (taskCount+1) + " task(s)!");
