@@ -9,61 +9,73 @@ ____________________________________________________________
 
 ____________________________________________________________
 Got it. I've added this task:
-[T] [ ] study for test
+	[T] [ ] study for test
 There are now 1 task(s)!
 ____________________________________________________________
 
 ____________________________________________________________
 Got it. I've added this task:
-[D] [ ] tutorial 2 (by: next Monday)
+	[D] [ ] tutorial 2 (by: next Monday)
 There are now 2 task(s)!
 ____________________________________________________________
 
 ____________________________________________________________
 Got it. I've added this task:
-[E] [ ] project meeting (from: Aug 26th 11am to: 12pm)
+	[E] [ ] project meeting (from: Aug 26th 11am to: 12pm)
 There are now 3 task(s)!
 ____________________________________________________________
 
 ____________________________________________________________
 Here are the tasks that you've set:
-1. [T] [ ] study for test
-2. [D] [ ] tutorial 2 (by: next Monday)
-3. [E] [ ] project meeting (from: Aug 26th 11am to: 12pm)
+	1. [T] [ ] study for test
+	2. [D] [ ] tutorial 2 (by: next Monday)
+	3. [E] [ ] project meeting (from: Aug 26th 11am to: 12pm)
 ____________________________________________________________
 
 ____________________________________________________________
 Nice! I've marked this task as done:
-[T] [X] study for test
+	[T] [X] study for test
 ____________________________________________________________
 
 ____________________________________________________________
 Nice! I've marked this task as done:
-[D] [X] tutorial 2 (by: next Monday)
+	[D] [X] tutorial 2 (by: next Monday)
 ____________________________________________________________
 
 ____________________________________________________________
 Here are the tasks that you've set:
-1. [T] [X] study for test
-2. [D] [X] tutorial 2 (by: next Monday)
-3. [E] [ ] project meeting (from: Aug 26th 11am to: 12pm)
+	1. [T] [X] study for test
+	2. [D] [X] tutorial 2 (by: next Monday)
+	3. [E] [ ] project meeting (from: Aug 26th 11am to: 12pm)
 ____________________________________________________________
 
 ____________________________________________________________
 Got it! I've marked this task as not done yet:
-[D] [ ] tutorial 2 (by: next Monday)
+	[D] [ ] tutorial 2 (by: next Monday)
 ____________________________________________________________
 
 ____________________________________________________________
 Nice! I've marked this task as done:
-[E] [X] project meeting (from: Aug 26th 11am to: 12pm)
+	[E] [X] project meeting (from: Aug 26th 11am to: 12pm)
 ____________________________________________________________
 
 ____________________________________________________________
 Here are the tasks that you've set:
-1. [T] [X] study for test
-2. [D] [ ] tutorial 2 (by: next Monday)
-3. [E] [X] project meeting (from: Aug 26th 11am to: 12pm)
+	1. [T] [X] study for test
+	2. [D] [ ] tutorial 2 (by: next Monday)
+	3. [E] [X] project meeting (from: Aug 26th 11am to: 12pm)
+____________________________________________________________
+
+____________________________________________________________
+Understood! I've removed this task:
+[E] [X] project meeting (from: Aug 26th 11am to: 12pm)
+There are now 2 task(s)!
+____________________________________________________________
+
+____________________________________________________________
+Here are the tasks that you've set:
+	1. [T] [X] study for test
+	2. [D] [ ] tutorial 2 (by: next Monday)
 ____________________________________________________________
 
 ____________________________________________________________

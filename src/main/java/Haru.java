@@ -90,7 +90,7 @@ public class Haru {
         System.out.println(LINE);
         System.out.println("Here are the tasks that you've set:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i).getTaskInfo());
+            System.out.println("\t" + (i + 1) + ". " + tasks.get(i).getTaskInfo());
         }
         System.out.println(LINEN);
     }
@@ -120,7 +120,7 @@ public class Haru {
             System.out.println(LINE);
             System.out.println("Got it! I've marked this task as not done yet:");
         }
-        System.out.println(tasks.get(taskIndex).getTaskInfo());
+        System.out.println("\t" + tasks.get(taskIndex).getTaskInfo());
         System.out.println(LINEN);
     }
 
@@ -181,7 +181,7 @@ public class Haru {
     public static void displayTask(ArrayList<Task> tasks, int taskIndex) {
         System.out.println(LINE);
         System.out.println("Got it. I've added this task:");
-        System.out.println(tasks.get(taskIndex).getTaskInfo());
+        System.out.println("\t" + tasks.get(taskIndex).getTaskInfo());
         System.out.println("There are now " + tasks.size() + " task(s)!");
         System.out.println(LINEN);
     }
