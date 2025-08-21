@@ -2,6 +2,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Haru {
+    private static final String LINE = "____________________________________________________________";
+    private static final String LINEN = "____________________________________________________________\n";
+
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
@@ -100,7 +103,7 @@ public class Haru {
 
                     case "bye":
                         bye();
-                        System.exit(0);
+                        return;
 
                     default:
                         throw new HaruException.InvalidCommandException();
@@ -129,28 +132,27 @@ public class Haru {
     }
 
     public static void list(ArrayList<Task> tasks) {
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE);
         System.out.println("Here are the tasks that you've set:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + ". " + tasks.get(i).getTaskInfo());
         }
-        System.out.println("____________________________________________________________\n");
+        System.out.println(LINEN);
     }
 
     public static void mark(ArrayList<Task> tasks, int taskIndex) {
         tasks.get(taskIndex).markDone();
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE);
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(tasks.get(taskIndex).getTaskInfo());
-        System.out.println("____________________________________________________________\n");
-    }
+        System.out.println(LINEN);    }
 
     public static void unmark(ArrayList<Task> tasks, int taskIndex) {
         tasks.get(taskIndex).markUndone();
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE);
         System.out.println("Got it! I've marked this task as not done yet:");
         System.out.println(tasks.get(taskIndex).getTaskInfo());
-        System.out.println("____________________________________________________________\n");
+        System.out.println(LINEN);
     }
 
     public static void toDo(ArrayList<Task> tasks, String taskDescription) {
@@ -171,17 +173,17 @@ public class Haru {
     public static void delete(ArrayList<Task> tasks, int taskIndex) {
         String taskInfo = tasks.get(taskIndex).getTaskInfo();
         tasks.remove(taskIndex);
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE);
         System.out.println("Understood! I've removed this task:\n" + taskInfo);
         System.out.println("There are now " + tasks.size() + " task(s)!");
-        System.out.println("____________________________________________________________\n");
+        System.out.println(LINEN);
     }
 
     public static void displayTask(ArrayList<Task> tasks, int taskIndex) {
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE);
         System.out.println("Got it. I've added this task:");
         System.out.println(tasks.get(taskIndex).getTaskInfo());
         System.out.println("There are now " + tasks.size() + " task(s)!");
-        System.out.println("____________________________________________________________\n");
+        System.out.println(LINEN);
     }
 }
