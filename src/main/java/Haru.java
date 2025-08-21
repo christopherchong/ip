@@ -30,42 +30,40 @@ public class Haru {
                         if (taskCount == 0) {
                             throw new HaruException.NoTasksException();
                         }
-                        else {
-                            list(tasks);
-                        }
+                        list(tasks);
                         break;
 
                     case "mark":
+                    case "unmark":
+                        if (arguments.isEmpty() || !arguments.matches("\\d+")) {
+                            throw new HaruException.NumberFormatException();
+                        }
                         taskIndex = Integer.parseInt(arguments) - 1;
                         if (taskIndex >= taskCount) {
                             throw new HaruException.InvalidIndexException();
                         }
-                        else if (tasks[taskIndex].getStatus().equals("X")) {
-                            throw new HaruException.MarkException();
-                        }
-                        else {
+
+                        if (command.equals("mark")) {
+                            if (tasks[taskIndex].getStatus().equals("X")) {
+                                throw new HaruException.MarkException();
+                            }
                             mark(tasks, taskIndex);
                         }
-                        break;
-
-                    case "unmark":
-                        taskIndex = Integer.parseInt(arguments) - 1;
-                        if (taskIndex >= taskCount) {
-                            throw new HaruException.InvalidIndexException();
-                        }
-                        else if (tasks[taskIndex].getStatus().equals(" ")) {
-                            throw new HaruException.UnmarkException();
-                        }
                         else {
+                            if (tasks[taskIndex].getStatus().equals(" ")) {
+                                throw new HaruException.UnmarkException();
+                            }
                             unmark(tasks, taskIndex);
                         }
                         break;
 
+                    // fortodo: no task description provided
                     case "todo":
                         toDo(tasks, taskCount, arguments);
                         taskCount++;
                         break;
 
+                    // deadline: no task description, by provided
                     case "deadline":
                         String[] deadlineArg = arguments.split(" /by ", 2);
                         String deadlineDesc = deadlineArg[0];
@@ -74,6 +72,7 @@ public class Haru {
                         taskCount++;
                         break;
 
+                    // deadline: no task description, from, to provided
                     case "event":
                         String[] eventArg = arguments.split(" /from ", 2);
                         String eventDesc = eventArg[0];
@@ -94,12 +93,6 @@ public class Haru {
                 }
             } catch (HaruException e) {
                 System.out.println(e.getMessage());
-            } catch (NumberFormatException e) {
-                System.out.println("""
-                ____________________________________________________________
-                A number was not entered! :(
-                ____________________________________________________________
-                """);
             }
         }
     }

@@ -16,6 +16,19 @@ public class HaruException extends Exception {
         }
     }
 
+    public static class NumberFormatException extends HaruException {
+        private static final String message =
+        """
+        ____________________________________________________________
+        A number was not entered! :(
+        ____________________________________________________________
+        """;
+
+        public NumberFormatException() {
+            super(message);
+        }
+    }
+
     public static class NoTasksException extends HaruException {
         private static final String message =
         """
