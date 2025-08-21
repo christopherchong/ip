@@ -16,7 +16,6 @@ public class Haru {
                 String input = sc.nextLine();
                 String command;
                 String arguments = "";
-                int taskIndex;
 
                 if (input.contains(" ")) {
                     String[] inputArray = input.split(" ", 2);
@@ -29,76 +28,28 @@ public class Haru {
 
                 switch (command) {
                     case "list":
-                        if (tasks.isEmpty()) {
-                            throw new HaruException.NoTasksException();
-                        }
-                        list(tasks);
+                        listHandler(tasks);
                         break;
 
                     case "mark":
                     case "unmark":
-                        if (arguments.isEmpty() || !arguments.matches("\\d+")) {
-                            throw new HaruException.NumberFormatException();
-                        }
-                        taskIndex = Integer.parseInt(arguments) - 1;
-                        if (taskIndex >= tasks.size()) {
-                            throw new HaruException.InvalidIndexException();
-                        }
-
-                        if (command.equals("mark")) {
-                            if (tasks.get(taskIndex).getStatus().equals("X")) {
-                                throw new HaruException.MarkException();
-                            }
-                            mark(tasks, taskIndex);
-                        }
-                        else {
-                            if (tasks.get(taskIndex).getStatus().equals(" ")) {
-                                throw new HaruException.UnmarkException();
-                            }
-                            unmark(tasks, taskIndex);
-                        }
+                        markHandler(tasks, command, arguments);
                         break;
 
                     case "todo":
-                        if (arguments.isEmpty()) {
-                            throw new HaruException.InvalidTodoException();
-                        }
-                        toDo(tasks, arguments);
+                        todoHandler(tasks, arguments);
                         break;
 
                     case "deadline":
-                        if (!arguments.contains(" /by ")) {
-                            throw new HaruException.InvalidDeadlineException();
-                        }
-                        String[] deadlineArg = arguments.split(" /by ", 2);
-                        String deadlineDesc = deadlineArg[0];
-                        String by = deadlineArg[1];
-                        deadline(tasks, deadlineDesc, by);
+                        deadlineHandler(tasks, arguments);
                         break;
 
                     case "event":
-                        if (!arguments.contains(" /from ") || !arguments.contains(" /to ") ||
-                                arguments.lastIndexOf(" /to ") < arguments.lastIndexOf(" /from ")) {
-                            throw new HaruException.InvalidEventException();
-                        }
-                        String[] eventArg = arguments.split(" /from ", 2);
-                        String eventDesc = eventArg[0];
-                        String dates = eventArg[1];
-                        String[] datesArray = dates.split(" /to ", 2);
-                        String startDateTime = datesArray[0];
-                        String endDateTime = datesArray[1];
-                        event(tasks, eventDesc, startDateTime, endDateTime);
+                        eventHandler(tasks, arguments);
                         break;
 
                     case "delete":
-                        if (arguments.isEmpty() || !arguments.matches("\\d+")) {
-                            throw new HaruException.NumberFormatException();
-                        }
-                        taskIndex = Integer.parseInt(arguments) - 1;
-                        if (taskIndex >= tasks.size()) {
-                            throw new HaruException.InvalidIndexException();
-                        }
-                        delete(tasks, taskIndex);
+                        deleteHandler(tasks, arguments);
                         break;
 
                     case "bye":
@@ -131,7 +82,11 @@ public class Haru {
         """);
     }
 
-    public static void list(ArrayList<Task> tasks) {
+    public static void listHandler(ArrayList<Task> tasks) throws HaruException {
+        if (tasks.isEmpty()) {
+            throw new HaruException.NoTasksException();
+        }
+
         System.out.println(LINE);
         System.out.println("Here are the tasks that you've set:");
         for (int i = 0; i < tasks.size(); i++) {
@@ -140,37 +95,81 @@ public class Haru {
         System.out.println(LINEN);
     }
 
-    public static void mark(ArrayList<Task> tasks, int taskIndex) {
-        tasks.get(taskIndex).markDone();
-        System.out.println(LINE);
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(tasks.get(taskIndex).getTaskInfo());
-        System.out.println(LINEN);    }
+    public static void markHandler(ArrayList<Task> tasks, String command, String arguments) throws HaruException {
+        if (arguments.isEmpty() || !arguments.matches("\\d+")) {
+            throw new HaruException.NumberFormatException();
+        }
+        int taskIndex = Integer.parseInt(arguments) - 1;
+        if (taskIndex >= tasks.size()) {
+            throw new HaruException.InvalidIndexException();
+        }
 
-    public static void unmark(ArrayList<Task> tasks, int taskIndex) {
-        tasks.get(taskIndex).markUndone();
-        System.out.println(LINE);
-        System.out.println("Got it! I've marked this task as not done yet:");
+        if (command.equals("mark")) {
+            if (tasks.get(taskIndex).getStatus().equals("X")) {
+                throw new HaruException.MarkException();
+            }
+            tasks.get(taskIndex).markDone();
+            System.out.println(LINE);
+            System.out.println("Nice! I've marked this task as done:");
+        }
+        else {
+            if (tasks.get(taskIndex).getStatus().equals(" ")) {
+                throw new HaruException.UnmarkException();
+            }
+            tasks.get(taskIndex).markUndone();
+            System.out.println(LINE);
+            System.out.println("Got it! I've marked this task as not done yet:");
+        }
         System.out.println(tasks.get(taskIndex).getTaskInfo());
         System.out.println(LINEN);
     }
 
-    public static void toDo(ArrayList<Task> tasks, String taskDescription) {
-        tasks.add(new Todo(taskDescription));
+    public static void todoHandler(ArrayList<Task> tasks, String description) throws HaruException {
+        if (description.isEmpty()) {
+            throw new HaruException.InvalidTodoException();
+        }
+
+        tasks.add(new Todo(description));
         displayTask(tasks, tasks.size() - 1);
     }
 
-    public static void deadline(ArrayList<Task> tasks, String description, String by) {
+    public static void deadlineHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
+        if (!arguments.contains(" /by ")) {
+            throw new HaruException.InvalidDeadlineException();
+        }
+
+        String[] argumentsArray = arguments.split(" /by ", 2);
+        String description = argumentsArray[0];
+        String by = argumentsArray[1];
         tasks.add(new Deadline(description, by));
         displayTask(tasks, tasks.size() - 1);
     }
 
-    public static void event(ArrayList<Task> tasks, String description, String startDateTime, String endDateTime) {
-        tasks.add(new Event(description, startDateTime, endDateTime));
+    public static void eventHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
+        if (!arguments.contains(" /from ") || !arguments.contains(" /to ") ||
+                arguments.lastIndexOf(" /to ") < arguments.lastIndexOf(" /from ")) {
+            throw new HaruException.InvalidEventException();
+        }
+
+        String[] argumentsArray = arguments.split(" /from ", 2);
+        String description = argumentsArray[0];
+        String dates = argumentsArray[1];
+        String[] datesArray = dates.split(" /to ", 2);
+        String from = datesArray[0];
+        String to = datesArray[1];
+        tasks.add(new Event(description, from, to));
         displayTask(tasks, tasks.size() - 1);
     }
 
-    public static void delete(ArrayList<Task> tasks, int taskIndex) {
+    public static void deleteHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
+        if (arguments.isEmpty() || !arguments.matches("\\d+")) {
+            throw new HaruException.NumberFormatException();
+        }
+        int taskIndex = Integer.parseInt(arguments) - 1;
+        if (taskIndex >= tasks.size()) {
+            throw new HaruException.InvalidIndexException();
+        }
+
         String taskInfo = tasks.get(taskIndex).getTaskInfo();
         tasks.remove(taskIndex);
         System.out.println(LINE);
