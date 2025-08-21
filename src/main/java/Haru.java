@@ -57,14 +57,18 @@ public class Haru {
                         }
                         break;
 
-                    // fortodo: no task description provided
                     case "todo":
+                        if (arguments.isEmpty()) {
+                            throw new HaruException.InvalidTodoException();
+                        }
                         toDo(tasks, taskCount, arguments);
                         taskCount++;
                         break;
 
-                    // deadline: no task description, by provided
                     case "deadline":
+                        if (!arguments.contains(" /by ")) {
+                            throw new HaruException.InvalidDeadlineException();
+                        }
                         String[] deadlineArg = arguments.split(" /by ", 2);
                         String deadlineDesc = deadlineArg[0];
                         String by = deadlineArg[1];
@@ -72,8 +76,11 @@ public class Haru {
                         taskCount++;
                         break;
 
-                    // deadline: no task description, from, to provided
                     case "event":
+                        if (!arguments.contains(" /from ") || !arguments.contains(" /to ") ||
+                                arguments.lastIndexOf(" /to ") < arguments.lastIndexOf(" /from ")) {
+                            throw new HaruException.InvalidEventException();
+                        }
                         String[] eventArg = arguments.split(" /from ", 2);
                         String eventDesc = eventArg[0];
                         String dates = eventArg[1];

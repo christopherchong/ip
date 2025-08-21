@@ -4,11 +4,9 @@ deadline tutorial 2 /by next Monday
 event project meeting /from Aug 26th 11am /to 12pm
 list
 mark 1
-list
 mark 2
 list
 unmark 2
-list
 mark 3
 list
 bye
