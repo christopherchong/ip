@@ -87,6 +87,17 @@ public class Haru {
                         event(tasks, eventDesc, startDateTime, endDateTime);
                         break;
 
+                    case "delete":
+                        if (arguments.isEmpty() || !arguments.matches("\\d+")) {
+                            throw new HaruException.NumberFormatException();
+                        }
+                        taskIndex = Integer.parseInt(arguments) - 1;
+                        if (taskIndex >= tasks.size()) {
+                            throw new HaruException.InvalidIndexException();
+                        }
+                        delete(tasks, taskIndex);
+                        break;
+
                     case "bye":
                         bye();
                         System.exit(0);
@@ -155,6 +166,15 @@ public class Haru {
     public static void event(ArrayList<Task> tasks, String description, String startDateTime, String endDateTime) {
         tasks.add(new Event(description, startDateTime, endDateTime));
         displayTask(tasks, tasks.size() - 1);
+    }
+
+    public static void delete(ArrayList<Task> tasks, int taskIndex) {
+        String taskInfo = tasks.get(taskIndex).getTaskInfo();
+        tasks.remove(taskIndex);
+        System.out.println("____________________________________________________________");
+        System.out.println("Understood! I've removed this task:\n" + taskInfo);
+        System.out.println("There are now " + tasks.size() + " task(s)!");
+        System.out.println("____________________________________________________________\n");
     }
 
     public static void displayTask(ArrayList<Task> tasks, int taskIndex) {
