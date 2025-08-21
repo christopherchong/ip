@@ -1,10 +1,9 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Haru {
     public static void main(String[] args) {
-        final int MAX_TASKS = 100;
-        Task[] tasks = new Task[MAX_TASKS];
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
 
         greet();
@@ -27,7 +26,7 @@ public class Haru {
 
                 switch (command) {
                     case "list":
-                        if (taskCount == 0) {
+                        if (tasks.isEmpty()) {
                             throw new HaruException.NoTasksException();
                         }
                         list(tasks);
@@ -39,18 +38,18 @@ public class Haru {
                             throw new HaruException.NumberFormatException();
                         }
                         taskIndex = Integer.parseInt(arguments) - 1;
-                        if (taskIndex >= taskCount) {
+                        if (taskIndex >= tasks.size()) {
                             throw new HaruException.InvalidIndexException();
                         }
 
                         if (command.equals("mark")) {
-                            if (tasks[taskIndex].getStatus().equals("X")) {
+                            if (tasks.get(taskIndex).getStatus().equals("X")) {
                                 throw new HaruException.MarkException();
                             }
                             mark(tasks, taskIndex);
                         }
                         else {
-                            if (tasks[taskIndex].getStatus().equals(" ")) {
+                            if (tasks.get(taskIndex).getStatus().equals(" ")) {
                                 throw new HaruException.UnmarkException();
                             }
                             unmark(tasks, taskIndex);
@@ -61,8 +60,7 @@ public class Haru {
                         if (arguments.isEmpty()) {
                             throw new HaruException.InvalidTodoException();
                         }
-                        toDo(tasks, taskCount, arguments);
-                        taskCount++;
+                        toDo(tasks, arguments);
                         break;
 
                     case "deadline":
@@ -72,8 +70,7 @@ public class Haru {
                         String[] deadlineArg = arguments.split(" /by ", 2);
                         String deadlineDesc = deadlineArg[0];
                         String by = deadlineArg[1];
-                        deadline(tasks, taskCount, deadlineDesc, by);
-                        taskCount++;
+                        deadline(tasks, deadlineDesc, by);
                         break;
 
                     case "event":
@@ -87,8 +84,7 @@ public class Haru {
                         String[] datesArray = dates.split(" /to ", 2);
                         String startDateTime = datesArray[0];
                         String endDateTime = datesArray[1];
-                        event(tasks, taskCount, eventDesc, startDateTime, endDateTime);
-                        taskCount++;
+                        event(tasks, eventDesc, startDateTime, endDateTime);
                         break;
 
                     case "bye":
@@ -121,51 +117,51 @@ public class Haru {
         """);
     }
 
-    public static void list(Task[] tasks) {
+    public static void list(ArrayList<Task> tasks) {
         System.out.println("____________________________________________________________");
         System.out.println("Here are the tasks that you've set:");
-        for (int i = 0; tasks[i] != null; i++) {
-            System.out.println((i + 1) + ". " + tasks[i].getTaskInfo());
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + ". " + tasks.get(i).getTaskInfo());
         }
         System.out.println("____________________________________________________________\n");
     }
 
-    public static void mark(Task[] tasks, int taskIndex) {
-        tasks[taskIndex].markDone();
+    public static void mark(ArrayList<Task> tasks, int taskIndex) {
+        tasks.get(taskIndex).markDone();
         System.out.println("____________________________________________________________");
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println(tasks[taskIndex].getTaskInfo());
+        System.out.println(tasks.get(taskIndex).getTaskInfo());
         System.out.println("____________________________________________________________\n");
     }
 
-    public static void unmark(Task[] tasks, int taskIndex) {
-        tasks[taskIndex].markUndone();
+    public static void unmark(ArrayList<Task> tasks, int taskIndex) {
+        tasks.get(taskIndex).markUndone();
         System.out.println("____________________________________________________________");
         System.out.println("Got it! I've marked this task as not done yet:");
-        System.out.println(tasks[taskIndex].getTaskInfo());
+        System.out.println(tasks.get(taskIndex).getTaskInfo());
         System.out.println("____________________________________________________________\n");
     }
 
-    public static void toDo(Task[] tasks, int taskCount, String taskDescription) {
-        tasks[taskCount] = new Todo(taskDescription);
-        displayTask(tasks, taskCount);
+    public static void toDo(ArrayList<Task> tasks, String taskDescription) {
+        tasks.add(new Todo(taskDescription));
+        displayTask(tasks, tasks.size() - 1);
     }
 
-    public static void deadline(Task[] tasks, int taskCount, String description, String by) {
-        tasks[taskCount] = new Deadline(description, by);
-        displayTask(tasks, taskCount);
+    public static void deadline(ArrayList<Task> tasks, String description, String by) {
+        tasks.add(new Deadline(description, by));
+        displayTask(tasks, tasks.size() - 1);
     }
 
-    public static void event(Task[] tasks, int taskCount, String description, String startDateTime, String endDateTime) {
-        tasks[taskCount] = new Event(description, startDateTime, endDateTime);
-        displayTask(tasks, taskCount);
+    public static void event(ArrayList<Task> tasks, String description, String startDateTime, String endDateTime) {
+        tasks.add(new Event(description, startDateTime, endDateTime));
+        displayTask(tasks, tasks.size() - 1);
     }
 
-    public static void displayTask(Task[] tasks, int taskCount) {
+    public static void displayTask(ArrayList<Task> tasks, int taskIndex) {
         System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
-        System.out.println(tasks[taskCount].getTaskInfo());
-        System.out.println("There are now " + (taskCount+1) + " task(s)!");
+        System.out.println(tasks.get(taskIndex).getTaskInfo());
+        System.out.println("There are now " + tasks.size() + " task(s)!");
         System.out.println("____________________________________________________________\n");
     }
 }
