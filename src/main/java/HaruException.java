@@ -1,116 +1,68 @@
 public class HaruException extends Exception {
+    private static final String LINE = "____________________________________________________________\n";
+
     public HaruException(String message) {
-        super(message);
+        super(formatMessage(message));
+    }
+
+    private static String formatMessage(String message) {
+        return LINE + message + "\n" + LINE;
     }
 
     public static class InvalidCommandException extends HaruException {
-        private static final String message = """
-                ____________________________________________________________
-                I don't recognize that command :(
-                ____________________________________________________________
-                """;
-
         public InvalidCommandException() {
-            super(message);
+            super("I don't recognize that command :(");
         }
     }
 
     public static class NumberFormatException extends HaruException {
-        private static final String message = """
-                ____________________________________________________________
-                A number was not entered! :(
-                ____________________________________________________________
-                """;
-
         public NumberFormatException() {
-            super(message);
+            super("A number was not entered! :(");
         }
     }
 
     public static class NoTasksException extends HaruException {
-        private static final String message = """
-                ____________________________________________________________
-                There are no tasks!
-                ____________________________________________________________
-                """;
-
         public NoTasksException() {
-            super(message);
+            super("There are no tasks!");
         }
     }
 
     public static class InvalidIndexException extends HaruException {
-        private static final String message = """
-                ____________________________________________________________
-                Number entered was invalid!
-                ____________________________________________________________
-                """;
-
         public InvalidIndexException() {
-            super(message);
+            super("Number entered was invalid!");
         }
     }
 
     public static class MarkException extends HaruException {
-        private static final String message = """
-                ____________________________________________________________
-                Task is already marked!
-                ____________________________________________________________
-                """;
-
         public MarkException() {
-            super(message);
+            super("Task is already marked!");
         }
     }
 
     public static class UnmarkException extends HaruException {
-        private static final String message = """
-                ____________________________________________________________
-                Task is already unmarked!
-                ____________________________________________________________
-                """;
-
         public UnmarkException() {
-            super(message);
+            super("Task is already unmarked!");
         }
     }
 
     public static class InvalidTodoException extends HaruException {
-        private static final String message = """
-                ____________________________________________________________
-                The task was not entered correctly!
-                Try doing "todo <task>"
-                ____________________________________________________________
-                """;
-
         public InvalidTodoException() {
-            super(message);
+            super("The task was not entered correctly!\n" +
+                  "Try doing \"todo <task>\"");
         }
     }
 
     public static class InvalidDeadlineException extends HaruException {
-        private static final String message = """
-                ____________________________________________________________
-                The task was not entered correctly!
-                Try doing "deadline <task> /by <date/time>"
-                ____________________________________________________________
-                """;
-
         public InvalidDeadlineException() {
-            super(message);
+            super("The task was not entered correctly!\n" +
+                  "Try doing \"deadline <task> /by <date/time>\"");
         }
     }
 
     public static class InvalidEventException extends HaruException {
-        private static final String message = """
-                ____________________________________________________________
-                The task was not entered correctly!
-                Try doing "event <task> /from <date/time> /to <date/time>"
-                ____________________________________________________________
-                """;
-
         public InvalidEventException() {
-            super(message);
+            super("The task was not entered correctly!\n" +
+                  "Try doing \"event <task> /from <date/time> /to <date/time>\"");
         }
     }
 }

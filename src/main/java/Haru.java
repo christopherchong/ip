@@ -66,20 +66,15 @@ public class Haru {
     }
 
     public static void greet() {
-        System.out.println("""
-        ____________________________________________________________
-        Hello! I'm Haru
-        What can I do for you?
-        ____________________________________________________________
-        """);
+        System.out.println(LINE);
+        System.out.println("Hello! I'm Haru\nWhat can I do for you?");
+        System.out.println(LINEN);
     }
 
     public static void bye() {
-        System.out.println("""
-        ____________________________________________________________
-        Bye. Hope to see you again soon!
-        ____________________________________________________________
-        """);
+        System.out.println(LINE);
+        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println(LINEN);
     }
 
     public static void listHandler(ArrayList<Task> tasks) throws HaruException {
