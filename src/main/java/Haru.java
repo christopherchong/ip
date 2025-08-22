@@ -168,7 +168,7 @@ public class Haru {
         String taskInfo = tasks.get(taskIndex).getTaskInfo();
         tasks.remove(taskIndex);
         System.out.println(LINE);
-        System.out.println("Understood! I've removed this task:\n" + taskInfo);
+        System.out.println("Understood! I've removed this task:\n\t" + taskInfo);
         System.out.println("There are now " + tasks.size() + " task(s)!");
         System.out.println(LINEN);
     }
