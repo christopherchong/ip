@@ -47,22 +47,22 @@ public class HaruException extends Exception {
 
     public static class InvalidTodoException extends HaruException {
         public InvalidTodoException() {
-            super("The task was not entered correctly!\n" +
-                  "Try doing \"todo <task>\"");
+            super("The task was not entered correctly!\n"
+                    + "Try doing \"todo <task>\"");
         }
     }
 
     public static class InvalidDeadlineException extends HaruException {
         public InvalidDeadlineException() {
-            super("The task was not entered correctly!\n" +
-                  "Try doing \"deadline <task> /by <date/time>\"");
+            super("The task was not entered correctly!\n"
+                    + "Try doing \"deadline <task> /by <date/time>\"");
         }
     }
 
     public static class InvalidEventException extends HaruException {
         public InvalidEventException() {
-            super("The task was not entered correctly!\n" +
-                  "Try doing \"event <task> /from <date/time> /to <date/time>\"");
+            super("The task was not entered correctly!\n"
+                    + "Try doing \"event <task> /from <date/time> /to <date/time>\"");
         }
     }
 }

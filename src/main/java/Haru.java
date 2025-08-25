@@ -21,43 +21,35 @@ public class Haru {
                     String[] inputArray = input.split(" ", 2);
                     command = inputArray[0];
                     arguments = inputArray[1];
-                }
-                else {
+                } else {
                     command = input;
                 }
 
                 switch (command) {
-                    case "list":
-                        listHandler(tasks);
-                        break;
-
-                    case "mark":
-                    case "unmark":
-                        markHandler(tasks, command, arguments);
-                        break;
-
-                    case "todo":
-                        todoHandler(tasks, arguments);
-                        break;
-
-                    case "deadline":
-                        deadlineHandler(tasks, arguments);
-                        break;
-
-                    case "event":
-                        eventHandler(tasks, arguments);
-                        break;
-
-                    case "delete":
-                        deleteHandler(tasks, arguments);
-                        break;
-
-                    case "bye":
-                        bye();
-                        return;
-
-                    default:
-                        throw new HaruException.InvalidCommandException();
+                case "list":
+                    listHandler(tasks);
+                    break;
+                case "mark":
+                case "unmark":
+                    markHandler(tasks, command, arguments);
+                    break;
+                case "todo":
+                    todoHandler(tasks, arguments);
+                    break;
+                case "deadline":
+                    deadlineHandler(tasks, arguments);
+                    break;
+                case "event":
+                    eventHandler(tasks, arguments);
+                    break;
+                case "delete":
+                    deleteHandler(tasks, arguments);
+                    break;
+                case "bye":
+                    bye();
+                    return;
+                default:
+                    throw new HaruException.InvalidCommandException();
                 }
             } catch (HaruException e) {
                 System.out.println(e.getMessage());
@@ -106,8 +98,7 @@ public class Haru {
             tasks.get(taskIndex).markDone();
             System.out.println(LINE);
             System.out.println("Nice! I've marked this task as done:");
-        }
-        else {
+        } else {
             if (tasks.get(taskIndex).getStatus().equals(" ")) {
                 throw new HaruException.UnmarkException();
             }
@@ -141,8 +132,8 @@ public class Haru {
     }
 
     public static void eventHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
-        if (!arguments.contains(" /from ") || !arguments.contains(" /to ") ||
-                arguments.lastIndexOf(" /to ") < arguments.lastIndexOf(" /from ")) {
+        if (!arguments.contains(" /from ") || !arguments.contains(" /to ")
+                || arguments.lastIndexOf(" /to ") < arguments.lastIndexOf(" /from ")) {
             throw new HaruException.InvalidEventException();
         }
 
