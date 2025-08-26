@@ -59,10 +59,10 @@ public class Storage {
         return tasks;
     }
 
-    public static void updateTaskList(ArrayList<Task> tasks) throws IOException {
+    public static void updateTaskList(TaskList tasks) throws IOException {
         FileWriter f = new FileWriter(filePath.toString());
-        for (Task task : tasks) {
-            f.write(task.getTaskInfoForFile() + System.lineSeparator());
+        for (int i = 0; i < tasks.size(); i++) {
+            f.write(tasks.get(i).getTaskInfoForFile() + System.lineSeparator());
         }
         f.close();
     }

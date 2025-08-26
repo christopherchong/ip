@@ -3,17 +3,16 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class Haru {
     private static final Ui ui = new Ui();
 
     public static void main(String[] args) {
-        ArrayList<Task> tasks;
+        TaskList tasks;
 
         try {
             Storage.verifyTaskFile();
-            tasks = Storage.loadTaskList();
+            tasks = new TaskList(Storage.loadTaskList());
         } catch (HaruException | IOException e) {
             ui.showError(e.getMessage());
             return;
@@ -73,15 +72,15 @@ public class Haru {
         }
     }
 
-    public static void listHandler(ArrayList<Task> tasks) throws HaruException {
-        if (tasks.isEmpty()) {
+    public static void listHandler(TaskList tasks) throws HaruException {
+        if (tasks.size() == 0) {
             throw new HaruException.NoTasksException();
         }
 
         ui.showAllTasks(tasks);
     }
 
-    public static void markHandler(ArrayList<Task> tasks, String command, String arguments) throws HaruException {
+    public static void markHandler(TaskList tasks, String command, String arguments) throws HaruException {
         if (arguments.isEmpty() || !arguments.matches("\\d+")) {
             throw new HaruException.NumberFormatException();
         }
@@ -106,7 +105,7 @@ public class Haru {
         }
     }
 
-    public static void todoHandler(ArrayList<Task> tasks, String description) throws HaruException {
+    public static void todoHandler(TaskList tasks, String description) throws HaruException {
         if (description.isEmpty()) {
             throw new HaruException.InvalidTodoException();
         }
@@ -115,7 +114,7 @@ public class Haru {
         ui.showAddedTask(newTask, tasks.size());
     }
 
-    public static void deadlineHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
+    public static void deadlineHandler(TaskList tasks, String arguments) throws HaruException {
         if (!arguments.contains(" /by ")) {
             throw new HaruException.InvalidDeadlineException();
         }
@@ -132,7 +131,7 @@ public class Haru {
         }
     }
 
-    public static void eventHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
+    public static void eventHandler(TaskList tasks, String arguments) throws HaruException {
         if (!arguments.contains(" /from ") || !arguments.contains(" /to ")
                 || arguments.lastIndexOf(" /to ") < arguments.lastIndexOf(" /from ")) {
             throw new HaruException.InvalidEventException();
@@ -160,7 +159,7 @@ public class Haru {
         }
     }
 
-    public static void deleteHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
+    public static void deleteHandler(TaskList tasks, String arguments) throws HaruException {
         if (arguments.isEmpty() || !arguments.matches("\\d+")) {
             throw new HaruException.NumberFormatException();
         }

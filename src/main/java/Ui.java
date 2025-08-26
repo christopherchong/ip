@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Ui {
     private static final String LINE = "___________________________________________________________________________________";
     private static final String LINEN = "___________________________________________________________________________________\n";
@@ -30,7 +28,7 @@ public class Ui {
         System.out.println(LINEN);
     }
 
-    public void showAllTasks(ArrayList<Task> tasks) {
+    public void showAllTasks(TaskList tasks) {
         System.out.println(LINE);
         System.out.println("Here are the tasks that you've set:");
         for (int i = 0; i < tasks.size(); i++) {
