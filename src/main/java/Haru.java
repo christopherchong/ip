@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Haru {
-    private static final String LINE = "____________________________________________________________";
-    private static final String LINEN = "____________________________________________________________\n";
+    private static final String LINE = "___________________________________________________________________________________";
+    private static final String LINEN = "___________________________________________________________________________________\n";
 
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -109,8 +109,9 @@ public class Haru {
                 break;
 
             case 'E': // e.g. E|0|project meeting|2/12/2019 1800|2/12/2019 1900
-                String from = arguments[3];
-                String to = arguments[4];
+                DateTimeFormatter eventFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime from = LocalDateTime.parse(arguments[3], eventFormatter);
+                LocalDateTime to = LocalDateTime.parse(arguments[4], eventFormatter);
                 tasks.add(new Event(isDone, description, from, to));
                 break;
             }
@@ -194,8 +195,8 @@ public class Haru {
         String[] argumentsArray = arguments.split(" /by ", 2);
         String description = argumentsArray[0];
         try {
-            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/y Hmm");
-            LocalDateTime by = LocalDateTime.parse(argumentsArray[1], inputFormatter);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y Hmm");
+            LocalDateTime by = LocalDateTime.parse(argumentsArray[1], formatter);
             tasks.add(new Deadline(description, by));
             displayTask(tasks, tasks.size() - 1);
         } catch (DateTimeParseException e){
@@ -213,10 +214,21 @@ public class Haru {
         String description = argumentsArray[0];
         String dates = argumentsArray[1];
         String[] datesArray = dates.split(" /to ", 2);
-        String from = datesArray[0];
-        String to = datesArray[1];
-        tasks.add(new Event(description, from, to));
-        displayTask(tasks, tasks.size() - 1);
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y Hmm");
+            LocalDateTime from = LocalDateTime.parse(datesArray[0], formatter);
+            LocalDateTime to = LocalDateTime.parse(datesArray[1], formatter);
+            if (to.isBefore(from)) {
+                throw new HaruException.DateTimeOrderException();
+            } else if (to.isEqual(from)) {
+                throw new HaruException.SameDateTimeException();
+            }
+
+            tasks.add(new Event(description, from, to));
+            displayTask(tasks, tasks.size() - 1);
+        } catch (DateTimeParseException e){
+            throw new HaruException.DateTimeParseException();
+        }
     }
 
     public static void deleteHandler(ArrayList<Task> tasks, String arguments) throws HaruException {

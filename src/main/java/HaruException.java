@@ -1,5 +1,5 @@
 public class HaruException extends Exception {
-    private static final String LINE = "____________________________________________________________\n";
+    private static final String LINE = "___________________________________________________________________________________\n";
 
     public HaruException(String message) {
         super(formatMessage(message));
@@ -70,6 +70,20 @@ public class HaruException extends Exception {
         public DateTimeParseException() {
             super("The date was not entered correctly!\n"
                     + "Try following day/month/year time (e.g. 2/12/2019 1800)");
+        }
+    }
+
+    public static class DateTimeOrderException extends HaruException {
+        public DateTimeOrderException() {
+            super("The 'to' date is earlier than the 'from' date!\n"
+                    + "Try entering the dates again!");
+        }
+    }
+
+    public static class SameDateTimeException extends HaruException {
+        public SameDateTimeException() {
+            super("The 'to' and 'from' dates are the same!\n"
+                    + "Try entering the dates again!");
         }
     }
 }
