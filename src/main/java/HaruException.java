@@ -65,4 +65,11 @@ public class HaruException extends Exception {
                     + "Try doing \"event <task> /from <date/time> /to <date/time>\"");
         }
     }
+
+    public static class DateTimeParseException extends HaruException {
+        public DateTimeParseException() {
+            super("The date was not entered correctly!\n"
+                    + "Try following day/month/year time (e.g. 2/12/2019 1800)");
+        }
+    }
 }
