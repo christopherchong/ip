@@ -3,22 +3,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Parser {
-    public static String[] parse(String input) {
-        String command;
-        String arguments = "";
-
-        if (input.contains(" ")) {
-            String[] inputArray = input.split(" ", 2);
-            command = inputArray[0];
-            arguments = inputArray[1];
-        } else {
-            command = input;
-        }
-
-        return new String[]{command, arguments};
-    }
-
-    public static Command parse2(String input) throws HaruException {
+    public static Command parse(String input) throws HaruException {
         String command;
         String arguments = "";
 
@@ -49,8 +34,7 @@ public class Parser {
             if (arguments.isEmpty()) {
                 throw new HaruException.InvalidTodoException();
             }
-            String description = arguments;
-            return new AddCommand(new Todo(description));
+            return new AddCommand(new Todo(arguments));
         }
         case "deadline": {
             if (!arguments.contains(" /by ")) {
