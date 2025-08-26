@@ -18,4 +18,9 @@ public class Event extends Task {
     public String getTaskInfo() {
         return super.getTaskInfo() + " (from: " + startDateTime + " to: " + endDateTime + ")";
     }
+
+    @Override
+    public String getTaskInfoForFile() {
+        return super.getTaskInfoForFile() + "|" + startDateTime + "|" + endDateTime;
+    }
 }

@@ -20,7 +20,7 @@ public class Task {
     }
 
     public String getTaskInfo() {
-        return "[" + this.type + "] [" + this.getStatus() + "] " + this.description;
+        return "[" + type + "] [" + getStatus() + "] " + description;
     }
 
     public void markDone() {
@@ -29,5 +29,10 @@ public class Task {
 
     public void markUndone() {
         this.isDone = false;
+    }
+
+    // for updating haru.txt
+    public String getTaskInfoForFile() {
+        return type + "|" + (isDone ? "1" : "0") + "|" + description;
     }
 }

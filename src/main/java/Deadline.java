@@ -15,4 +15,9 @@ public class Deadline extends Task {
     public String getTaskInfo() {
         return super.getTaskInfo() + " (by: " + by + ")";
     }
+
+    @Override
+    public String getTaskInfoForFile() {
+        return super.getTaskInfoForFile() + "|" + by;
+    }
 }

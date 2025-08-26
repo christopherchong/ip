@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,11 +15,18 @@ public class Haru {
         ArrayList<Task> tasks = new ArrayList<>();
 
         // Retrieval of task file
-        Path path = Paths.get("src","data", "haru.txt");
+        Path folderPath = Paths.get("src","data");
+        Path filePath = Paths.get("src","data", "haru.txt");
         try {
-            readTaskList(tasks, path);
+            if (!Files.exists(folderPath)) {
+                Files.createDirectories(folderPath);
+                Files.createFile(filePath);
+            } else if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
+            }
+            readTaskList(tasks, filePath);
         } catch (IOException e) {
-            System.out.println("There was an error with file operation!");
+            System.out.println("There was an unexpected error with file operation!");
             return;
         }
 
@@ -47,18 +55,23 @@ public class Haru {
                 case "mark":
                 case "unmark":
                     markHandler(tasks, command, arguments);
+                    updateTaskList(tasks, filePath);
                     break;
                 case "todo":
                     todoHandler(tasks, arguments);
+                    updateTaskList(tasks, filePath);
                     break;
                 case "deadline":
                     deadlineHandler(tasks, arguments);
+                    updateTaskList(tasks, filePath);
                     break;
                 case "event":
                     eventHandler(tasks, arguments);
+                    updateTaskList(tasks, filePath);
                     break;
                 case "delete":
                     deleteHandler(tasks, arguments);
+                    updateTaskList(tasks, filePath);
                     break;
                 case "bye":
                     bye();
@@ -66,18 +79,13 @@ public class Haru {
                 default:
                     throw new HaruException.InvalidCommandException();
                 }
-            } catch (HaruException e) {
+            } catch (HaruException | IOException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
     private static void readTaskList(ArrayList<Task> tasks, Path filePath) throws IOException {
-        if (!Files.exists(filePath)) {
-            Files.createFile(filePath);
-            return;
-        }
-
         File f = new File(filePath.toString());
         Scanner sc = new Scanner(f);
         while (sc.hasNext()) {
@@ -103,6 +111,14 @@ public class Haru {
                 break;
             }
         }
+    }
+
+    private static void updateTaskList(ArrayList<Task> tasks, Path filePath) throws IOException {
+        FileWriter f = new FileWriter(filePath.toString());
+        for (Task task : tasks) {
+            f.write(task.getTaskInfoForFile() + System.lineSeparator());
+        }
+        f.close();
     }
 
     public static void greet() {
