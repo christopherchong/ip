@@ -3,9 +3,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Haru {
-    private static Storage storage;
-    private static TaskList tasks;
-    private static Ui ui;
+    private final Storage storage;
+    private TaskList tasks;
+    private final Ui ui;
 
     public Haru(Path folderPath, Path filePath) {
         ui = new Ui();
