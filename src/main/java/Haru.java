@@ -24,16 +24,9 @@ public class Haru {
         while (true) {
             try {
                 String input = sc.nextLine();
-                String command;
-                String arguments = "";
-
-                if (input.contains(" ")) {
-                    String[] inputArray = input.split(" ", 2);
-                    command = inputArray[0];
-                    arguments = inputArray[1];
-                } else {
-                    command = input;
-                }
+                String[] parsedInput = Parser.parse(input);
+                String command =  parsedInput[0];
+                String arguments = parsedInput[1];
 
                 switch (command) {
                 case "list":
