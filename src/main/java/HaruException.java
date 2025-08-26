@@ -9,6 +9,12 @@ public class HaruException extends Exception {
         return LINE + message + "\n" + LINE;
     }
 
+    public static class CorruptedFileException extends HaruException {
+        public CorruptedFileException() {
+            super("The task file is corrupted!");
+        }
+    }
+
     public static class InvalidCommandException extends HaruException {
         public InvalidCommandException() {
             super("I don't recognize that command :(");
