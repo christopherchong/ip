@@ -29,7 +29,10 @@ public class Haru {
             }
             readTaskList(tasks, filePath);
         } catch (IOException e) {
-            System.out.println("There was an unexpected error with file operation!");
+            System.out.println("There was an unexpected error with task file!");
+            return;
+        } catch (DateTimeParseException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("The task file is corrupted!");
             return;
         }
 
