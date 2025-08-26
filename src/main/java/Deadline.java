@@ -3,7 +3,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
     protected LocalDateTime by;
-    // private final DateTimeFormatter storeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public Deadline(String description, LocalDateTime by) {
         super(description, 'D');
@@ -18,8 +17,7 @@ public class Deadline extends Task {
 
     @Override
     public String getTaskInfo() {
-        return super.getTaskInfo() + " (by: "
-                + by.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + ")";
+        return super.getTaskInfo() + " (by: " + by.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + ")";
     }
 
     @Override
