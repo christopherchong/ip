@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Haru {
-    private static final String LINE = "___________________________________________________________________________________";
-    private static final String LINEN = "___________________________________________________________________________________\n";
+    private static final Ui ui = new Ui();
 
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -38,7 +37,7 @@ public class Haru {
 
         // Prepare for user input
         Scanner sc = new Scanner(System.in);
-        greet();
+        ui.showWelcomeMessage();
 
         while (true) {
             try {
@@ -80,13 +79,13 @@ public class Haru {
                     updateTaskList(tasks, filePath);
                     break;
                 case "bye":
-                    bye();
+                    ui.showExitMessage();
                     return;
                 default:
                     throw new HaruException.InvalidCommandException();
                 }
             } catch (HaruException | IOException e) {
-                System.out.println(e.getMessage());
+                ui.showError(e.getMessage());
             }
         }
     }
@@ -129,29 +128,12 @@ public class Haru {
         f.close();
     }
 
-    public static void greet() {
-        System.out.println(LINE);
-        System.out.println("Hello! I'm Haru\nWhat can I do for you?");
-        System.out.println(LINEN);
-    }
-
-    public static void bye() {
-        System.out.println(LINE);
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(LINEN);
-    }
-
     public static void listHandler(ArrayList<Task> tasks) throws HaruException {
         if (tasks.isEmpty()) {
             throw new HaruException.NoTasksException();
         }
 
-        System.out.println(LINE);
-        System.out.println("Here are the tasks that you've set:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("\t" + (i + 1) + ". " + tasks.get(i).getTaskInfo());
-        }
-        System.out.println(LINEN);
+        ui.showAllTasks(tasks);
     }
 
     public static void markHandler(ArrayList<Task> tasks, String command, String arguments) throws HaruException {
@@ -163,32 +145,29 @@ public class Haru {
             throw new HaruException.InvalidIndexException();
         }
 
+        Task task = tasks.get(taskIndex);
         if (command.equals("mark")) {
-            if (tasks.get(taskIndex).getStatus().equals("X")) {
+            if (task.getStatus().equals("X")) {
                 throw new HaruException.MarkException();
             }
-            tasks.get(taskIndex).markDone();
-            System.out.println(LINE);
-            System.out.println("Nice! I've marked this task as done:");
+            task.markDone();
+            ui.showMarkMessage(task);
         } else {
-            if (tasks.get(taskIndex).getStatus().equals(" ")) {
+            if (task.getStatus().equals(" ")) {
                 throw new HaruException.UnmarkException();
             }
-            tasks.get(taskIndex).markUndone();
-            System.out.println(LINE);
-            System.out.println("Got it! I've marked this task as not done yet:");
+            task.markUndone();
+            ui.showUnmarkMessage(task);
         }
-        System.out.println("\t" + tasks.get(taskIndex).getTaskInfo());
-        System.out.println(LINEN);
     }
 
     public static void todoHandler(ArrayList<Task> tasks, String description) throws HaruException {
         if (description.isEmpty()) {
             throw new HaruException.InvalidTodoException();
         }
-
-        tasks.add(new Todo(description));
-        displayTask(tasks, tasks.size() - 1);
+        Task newTask =  new Todo(description);
+        tasks.add(newTask);
+        ui.showAddedTask(newTask, tasks.size());
     }
 
     public static void deadlineHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
@@ -200,8 +179,9 @@ public class Haru {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y Hmm");
             LocalDateTime by = LocalDateTime.parse(argumentsArray[1], formatter);
-            tasks.add(new Deadline(description, by));
-            displayTask(tasks, tasks.size() - 1);
+            Task newTask =  new Deadline(true, description, by);
+            tasks.add(newTask);
+            ui.showAddedTask(newTask, tasks.size());
         } catch (DateTimeParseException e){
             throw new HaruException.DateTimeParseException();
         }
@@ -227,8 +207,9 @@ public class Haru {
                 throw new HaruException.SameDateTimeException();
             }
 
-            tasks.add(new Event(description, from, to));
-            displayTask(tasks, tasks.size() - 1);
+            Task newTask =  new Event(description, from, to);
+            tasks.add(newTask);
+            ui.showAddedTask(newTask, tasks.size());
         } catch (DateTimeParseException e){
             throw new HaruException.DateTimeParseException();
         }
@@ -245,17 +226,6 @@ public class Haru {
 
         String taskInfo = tasks.get(taskIndex).getTaskInfo();
         tasks.remove(taskIndex);
-        System.out.println(LINE);
-        System.out.println("Understood! I've removed this task:\n\t" + taskInfo);
-        System.out.println("There are now " + tasks.size() + " task(s)!");
-        System.out.println(LINEN);
-    }
-
-    public static void displayTask(ArrayList<Task> tasks, int taskIndex) {
-        System.out.println(LINE);
-        System.out.println("Got it. I've added this task:");
-        System.out.println("\t" + tasks.get(taskIndex).getTaskInfo());
-        System.out.println("There are now " + tasks.size() + " task(s)!");
-        System.out.println(LINEN);
+        ui.showDeletedTask(taskInfo, tasks.size());
     }
 }
