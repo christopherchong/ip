@@ -1,9 +1,4 @@
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
@@ -14,28 +9,16 @@ public class Haru {
     private static final Ui ui = new Ui();
 
     public static void main(String[] args) {
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks;
 
-        // Retrieval of task file
-        Path folderPath = Paths.get("src","data");
-        Path filePath = Paths.get("src","data", "haru.txt");
         try {
-            if (!Files.exists(folderPath)) {
-                Files.createDirectories(folderPath);
-                Files.createFile(filePath);
-            } else if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-            }
-            readTaskList(tasks, filePath);
+            Storage.verifyTaskFile();
+            tasks = Storage.loadTaskList();
         } catch (IOException e) {
-            System.out.println("There was an unexpected error with task file!");
-            return;
-        } catch (DateTimeParseException | ArrayIndexOutOfBoundsException e) {
-            System.out.println("The task file is corrupted!");
+            ui.showError(e.getMessage());
             return;
         }
 
-        // Prepare for user input
         Scanner sc = new Scanner(System.in);
         ui.showWelcomeMessage();
 
@@ -60,23 +43,23 @@ public class Haru {
                 case "mark":
                 case "unmark":
                     markHandler(tasks, command, arguments);
-                    updateTaskList(tasks, filePath);
+                    Storage.updateTaskList(tasks);
                     break;
                 case "todo":
                     todoHandler(tasks, arguments);
-                    updateTaskList(tasks, filePath);
+                    Storage.updateTaskList(tasks);
                     break;
                 case "deadline":
                     deadlineHandler(tasks, arguments);
-                    updateTaskList(tasks, filePath);
+                    Storage.updateTaskList(tasks);
                     break;
                 case "event":
                     eventHandler(tasks, arguments);
-                    updateTaskList(tasks, filePath);
+                    Storage.updateTaskList(tasks);
                     break;
                 case "delete":
                     deleteHandler(tasks, arguments);
-                    updateTaskList(tasks, filePath);
+                    Storage.updateTaskList(tasks);
                     break;
                 case "bye":
                     ui.showExitMessage();
@@ -88,44 +71,6 @@ public class Haru {
                 ui.showError(e.getMessage());
             }
         }
-    }
-
-    private static void readTaskList(ArrayList<Task> tasks, Path filePath) throws IOException {
-        File f = new File(filePath.toString());
-        Scanner sc = new Scanner(f);
-        while (sc.hasNext()) {
-            String task = sc.nextLine();
-            String[] arguments = task.split("\\|");
-            boolean isDone = arguments[1].equals("1");
-            String description = arguments[2];
-
-            switch (task.charAt(0)) {
-            case 'T': // e.g. T|1|read book
-                tasks.add(new Todo(isDone, description));
-                break;
-
-            case 'D': // e.g. D|0|return book|2/12/2019 1800
-                DateTimeFormatter deadlineFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                LocalDateTime by = LocalDateTime.parse(arguments[3], deadlineFormatter);
-                tasks.add(new Deadline(isDone, description, by));
-                break;
-
-            case 'E': // e.g. E|0|project meeting|2/12/2019 1800|2/12/2019 1900
-                DateTimeFormatter eventFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                LocalDateTime from = LocalDateTime.parse(arguments[3], eventFormatter);
-                LocalDateTime to = LocalDateTime.parse(arguments[4], eventFormatter);
-                tasks.add(new Event(isDone, description, from, to));
-                break;
-            }
-        }
-    }
-
-    private static void updateTaskList(ArrayList<Task> tasks, Path filePath) throws IOException {
-        FileWriter f = new FileWriter(filePath.toString());
-        for (Task task : tasks) {
-            f.write(task.getTaskInfoForFile() + System.lineSeparator());
-        }
-        f.close();
     }
 
     public static void listHandler(ArrayList<Task> tasks) throws HaruException {
