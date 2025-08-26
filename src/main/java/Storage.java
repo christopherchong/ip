@@ -3,7 +3,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -11,10 +10,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    private static final Path folderPath = Paths.get("src","data");
-    private static final Path filePath = Paths.get("src","data", "haru.txt");
+    private final Path folderPath;
+    private final Path filePath;
 
-    public static void verifyTaskFile() throws IOException {
+    public Storage(Path folderPath, Path filePath) {
+        this.folderPath = folderPath;
+        this.filePath = filePath;
+    }
+
+    public void verifyTaskFile() throws IOException {
         if (!Files.exists(folderPath)) {
             Files.createDirectories(folderPath);
             Files.createFile(filePath);
@@ -23,7 +27,7 @@ public class Storage {
         }
     }
 
-    public static ArrayList<Task> loadTaskList() throws HaruException, IOException {
+    public ArrayList<Task> loadTaskList() throws HaruException, IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = new File(filePath.toString());
         Scanner sc = new Scanner(f);
@@ -59,7 +63,7 @@ public class Storage {
         return tasks;
     }
 
-    public static void updateTaskList(TaskList tasks) throws IOException {
+    public void updateTaskList(TaskList tasks) throws IOException {
         FileWriter f = new FileWriter(filePath.toString());
         for (int i = 0; i < tasks.size(); i++) {
             f.write(tasks.get(i).getTaskInfoForFile() + System.lineSeparator());

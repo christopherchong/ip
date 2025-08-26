@@ -1,29 +1,48 @@
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Scanner;
 import java.time.LocalDateTime;
 
 public class Haru {
-    private static final Ui ui = new Ui();
+    private static Storage storage;
+    private static TaskList tasks;
+    private static Ui ui;
 
-    public static void main(String[] args) {
-        TaskList tasks;
+    public Haru(Path folderPath, Path filePath) {
+        ui = new Ui();
+        storage = new Storage(folderPath, filePath);
 
         try {
-            Storage.verifyTaskFile();
-            tasks = new TaskList(Storage.loadTaskList());
+            storage.verifyTaskFile();
+            tasks = new TaskList(storage.loadTaskList());
         } catch (HaruException | IOException e) {
             ui.showError(e.getMessage());
-            return;
+            tasks = new TaskList(); // overwrites corrupted haru.txt
         }
+    }
 
-        Scanner sc = new Scanner(System.in);
+    public void run2() {
         ui.showWelcomeMessage();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String input = ui.readCommand();
+                Command c = Parser.parse2(input);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (HaruException | IOException e) {
+                ui.showError(e.getMessage());
+            }
+        }
+    }
 
+    public void run() {
+        ui.showWelcomeMessage();
         while (true) {
             try {
-                String input = sc.nextLine();
+                String input = ui.readCommand();
                 String[] parsedInput = Parser.parse(input);
                 String command =  parsedInput[0];
                 String arguments = parsedInput[1];
@@ -35,23 +54,23 @@ public class Haru {
                 case "mark":
                 case "unmark":
                     markHandler(tasks, command, arguments);
-                    Storage.updateTaskList(tasks);
+                    storage.updateTaskList(tasks);
                     break;
                 case "todo":
                     todoHandler(tasks, arguments);
-                    Storage.updateTaskList(tasks);
+                    storage.updateTaskList(tasks);
                     break;
                 case "deadline":
                     deadlineHandler(tasks, arguments);
-                    Storage.updateTaskList(tasks);
+                    storage.updateTaskList(tasks);
                     break;
                 case "event":
                     eventHandler(tasks, arguments);
-                    Storage.updateTaskList(tasks);
+                    storage.updateTaskList(tasks);
                     break;
                 case "delete":
                     deleteHandler(tasks, arguments);
-                    Storage.updateTaskList(tasks);
+                    storage.updateTaskList(tasks);
                     break;
                 case "bye":
                     ui.showExitMessage();
@@ -65,8 +84,14 @@ public class Haru {
         }
     }
 
+    public static void main(String[] args) {
+        Path folderPath = Paths.get("src","data");
+        Path filePath = Paths.get("src","data", "haru.txt");
+        new Haru(folderPath, filePath).run2();
+    }
+
     public static void listHandler(TaskList tasks) throws HaruException {
-        if (tasks.size() == 0) {
+        if (tasks.isEmpty()) {
             throw new HaruException.NoTasksException();
         }
 
@@ -116,7 +141,7 @@ public class Haru {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y Hmm");
             LocalDateTime by = LocalDateTime.parse(argumentsArray[1], formatter);
-            Task newTask =  new Deadline(true, description, by);
+            Task newTask =  new Deadline(description, by);
             tasks.add(newTask);
             ui.showAddedTask(newTask, tasks.size());
         } catch (DateTimeParseException e){
