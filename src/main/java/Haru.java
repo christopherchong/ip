@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Haru {
-    private static final String LINE = "____________________________________________________________";
-    private static final String LINEN = "____________________________________________________________\n";
+    private static final String LINE = "___________________________________________________________________________________";
+    private static final String LINEN = "___________________________________________________________________________________\n";
 
     public static void main(String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -26,7 +29,10 @@ public class Haru {
             }
             readTaskList(tasks, filePath);
         } catch (IOException e) {
-            System.out.println("There was an unexpected error with file operation!");
+            System.out.println("There was an unexpected error with task file!");
+            return;
+        } catch (DateTimeParseException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("The task file is corrupted!");
             return;
         }
 
@@ -99,14 +105,16 @@ public class Haru {
                 tasks.add(new Todo(isDone, description));
                 break;
 
-            case 'D': // e.g. D|0|return book|June 6th
-                String by = arguments[3];
+            case 'D': // e.g. D|0|return book|2/12/2019 1800
+                DateTimeFormatter deadlineFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime by = LocalDateTime.parse(arguments[3], deadlineFormatter);
                 tasks.add(new Deadline(isDone, description, by));
                 break;
 
-            case 'E': // e.g. E|0|project meeting|Aug 6th 2-4pm
-                String from = arguments[3];
-                String to = arguments[4];
+            case 'E': // e.g. E|0|project meeting|2/12/2019 1800|2/12/2019 1900
+                DateTimeFormatter eventFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime from = LocalDateTime.parse(arguments[3], eventFormatter);
+                LocalDateTime to = LocalDateTime.parse(arguments[4], eventFormatter);
                 tasks.add(new Event(isDone, description, from, to));
                 break;
             }
@@ -187,12 +195,16 @@ public class Haru {
         if (!arguments.contains(" /by ")) {
             throw new HaruException.InvalidDeadlineException();
         }
-
         String[] argumentsArray = arguments.split(" /by ", 2);
         String description = argumentsArray[0];
-        String by = argumentsArray[1];
-        tasks.add(new Deadline(description, by));
-        displayTask(tasks, tasks.size() - 1);
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y Hmm");
+            LocalDateTime by = LocalDateTime.parse(argumentsArray[1], formatter);
+            tasks.add(new Deadline(description, by));
+            displayTask(tasks, tasks.size() - 1);
+        } catch (DateTimeParseException e){
+            throw new HaruException.DateTimeParseException();
+        }
     }
 
     public static void eventHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
@@ -205,10 +217,21 @@ public class Haru {
         String description = argumentsArray[0];
         String dates = argumentsArray[1];
         String[] datesArray = dates.split(" /to ", 2);
-        String from = datesArray[0];
-        String to = datesArray[1];
-        tasks.add(new Event(description, from, to));
-        displayTask(tasks, tasks.size() - 1);
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y Hmm");
+            LocalDateTime from = LocalDateTime.parse(datesArray[0], formatter);
+            LocalDateTime to = LocalDateTime.parse(datesArray[1], formatter);
+            if (to.isBefore(from)) {
+                throw new HaruException.DateTimeOrderException();
+            } else if (to.isEqual(from)) {
+                throw new HaruException.SameDateTimeException();
+            }
+
+            tasks.add(new Event(description, from, to));
+            displayTask(tasks, tasks.size() - 1);
+        } catch (DateTimeParseException e){
+            throw new HaruException.DateTimeParseException();
+        }
     }
 
     public static void deleteHandler(ArrayList<Task> tasks, String arguments) throws HaruException {
