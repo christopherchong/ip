@@ -15,48 +15,45 @@ public class Storage {
     private static final Path filePath = Paths.get("src","data", "haru.txt");
 
     public static void verifyTaskFile() throws IOException {
-        try {
-            if (!Files.exists(folderPath)) {
-                Files.createDirectories(folderPath);
-                Files.createFile(filePath);
-            } else if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-            }
-        } catch (IOException e) {
-            System.out.println("There was an unexpected error with task file!");
-        } catch (DateTimeParseException | ArrayIndexOutOfBoundsException e) {
-            System.out.println("The task file is corrupted!");
+        if (!Files.exists(folderPath)) {
+            Files.createDirectories(folderPath);
+            Files.createFile(filePath);
+        } else if (!Files.exists(filePath)) {
+            Files.createFile(filePath);
         }
-
     }
 
-    public static ArrayList<Task> loadTaskList() throws IOException {
+    public static ArrayList<Task> loadTaskList() throws HaruException, IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = new File(filePath.toString());
         Scanner sc = new Scanner(f);
         while (sc.hasNext()) {
-            String task = sc.nextLine();
-            String[] arguments = task.split("\\|");
-            boolean isDone = arguments[1].equals("1");
-            String description = arguments[2];
+            try {
+                String task = sc.nextLine();
+                String[] arguments = task.split("\\|");
+                boolean isDone = arguments[1].equals("1");
+                String description = arguments[2];
 
-            switch (task.charAt(0)) {
-            case 'T':
-                tasks.add(new Todo(isDone, description));
-                break;
+                switch (task.charAt(0)) {
+                case 'T':
+                    tasks.add(new Todo(isDone, description));
+                    break;
 
-            case 'D':
-                DateTimeFormatter deadlineFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                LocalDateTime by = LocalDateTime.parse(arguments[3], deadlineFormatter);
-                tasks.add(new Deadline(isDone, description, by));
-                break;
+                case 'D':
+                    DateTimeFormatter deadlineFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    LocalDateTime by = LocalDateTime.parse(arguments[3], deadlineFormatter);
+                    tasks.add(new Deadline(isDone, description, by));
+                    break;
 
-            case 'E':
-                DateTimeFormatter eventFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                LocalDateTime from = LocalDateTime.parse(arguments[3], eventFormatter);
-                LocalDateTime to = LocalDateTime.parse(arguments[4], eventFormatter);
-                tasks.add(new Event(isDone, description, from, to));
-                break;
+                case 'E':
+                    DateTimeFormatter eventFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    LocalDateTime from = LocalDateTime.parse(arguments[3], eventFormatter);
+                    LocalDateTime to = LocalDateTime.parse(arguments[4], eventFormatter);
+                    tasks.add(new Event(isDone, description, from, to));
+                    break;
+                }
+            } catch (DateTimeParseException | ArrayIndexOutOfBoundsException e) {
+                throw new HaruException.CorruptedFileException();
             }
         }
         return tasks;

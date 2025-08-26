@@ -14,7 +14,7 @@ public class Haru {
         try {
             Storage.verifyTaskFile();
             tasks = Storage.loadTaskList();
-        } catch (IOException e) {
+        } catch (HaruException | IOException e) {
             ui.showError(e.getMessage());
             return;
         }
