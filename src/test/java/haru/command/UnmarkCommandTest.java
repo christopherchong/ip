@@ -7,6 +7,10 @@ import haru.task.TaskList;
 import haru.task.Todo;
 import haru.ui.Ui;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.FileWriter;
+import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,18 +21,22 @@ class UnmarkCommandTest {
     private TaskList tasks;
     private Ui ui;
     private Storage storage;
+    private Path tempFile;
 
     @BeforeEach
-    void setUp() {
-        tasks = new TaskList();
-        tasks.add(new Todo(true, "read book"));
-        tasks.add(new Todo(true, "write report"));
+    void setUp() throws Exception {
         ui = new Ui();
-        storage = null;
+        tempFile = Files.createTempFile("haru_test", ".txt");
+        try (FileWriter writer = new FileWriter(tempFile.toFile())) {
+            writer.write("T|1|read book\n");
+            writer.write("T|1|write report\n");
+        }
+        storage = new Storage(tempFile);
+        tasks = new TaskList(storage.loadTaskList());
     }
 
     @Test
-    void execute_marksTaskSuccessfully() throws HaruException {
+    void execute_marksTaskSuccessfully() throws HaruException, IOException {
         UnmarkCommand unmark = new UnmarkCommand(0);
         unmark.execute(tasks, ui, storage);
         assertEquals(" ", tasks.get(0).getStatus(), "Task should be unmarked");
