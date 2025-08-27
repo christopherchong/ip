@@ -19,15 +19,14 @@ import haru.task.TaskList;
 import haru.task.Todo;
 
 public class Storage {
-    private final Path folderPath;
     private final Path filePath;
 
-    public Storage(Path folderPath, Path filePath) {
-        this.folderPath = folderPath;
+    public Storage(Path filePath) {
         this.filePath = filePath;
     }
 
     public void verifyTaskFile() throws IOException {
+        Path folderPath = filePath.getParent();
         if (!Files.exists(folderPath)) {
             Files.createDirectories(folderPath);
             Files.createFile(filePath);

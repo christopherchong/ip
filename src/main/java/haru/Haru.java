@@ -15,9 +15,9 @@ public class Haru {
     private TaskList tasks;
     private final Ui ui;
 
-    public Haru(Path folderPath, Path filePath) {
+    public Haru(Path filePath) {
         ui = new Ui();
-        storage = new Storage(folderPath, filePath);
+        storage = new Storage(filePath);
 
         try {
             storage.verifyTaskFile();
@@ -44,8 +44,7 @@ public class Haru {
     }
 
     public static void main(String[] args) {
-        Path folderPath = Paths.get("src","data");
         Path filePath = Paths.get("src","data", "haru.txt");
-        new Haru(folderPath, filePath).run();
+        new Haru(filePath).run();
     }
 }
