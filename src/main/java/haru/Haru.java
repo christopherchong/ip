@@ -44,7 +44,7 @@ public class Haru {
     }
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src","data", "haru.txt");
+        Path filePath = Paths.get("src", "data", "haru.txt");
         new Haru(filePath).run();
     }
 }

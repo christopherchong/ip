@@ -11,7 +11,7 @@ public class Task {
         this.type = type;
     }
 
-    public Task(String description, boolean isDone,char type) {
+    public Task(String description, boolean isDone, char type) {
         this.description = description;
         this.isDone = isDone;
         this.type = type;

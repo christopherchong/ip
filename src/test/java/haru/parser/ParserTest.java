@@ -1,21 +1,17 @@
 package haru.parser;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import haru.HaruException;
 import haru.command.AddCommand;
 import haru.command.Command;
 import haru.command.DeleteCommand;
-import haru.command.ExitCommand;
 import haru.command.ListCommand;
 import haru.command.MarkCommand;
 import haru.command.UnmarkCommand;
-import haru.task.Deadline;
-import haru.task.Event;
-import haru.task.Todo;
-
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ParserTest {
     // list

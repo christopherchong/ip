@@ -6,8 +6,10 @@ import haru.task.Task;
 import haru.task.TaskList;
 
 public class Ui {
-    private static final String LINE = "___________________________________________________________________________________";
-    private static final String LINEN = "___________________________________________________________________________________\n";
+    private static final String LINE =
+            "___________________________________________________________________________________";
+    private static final String LINEN =
+            "___________________________________________________________________________________\n";
 
     public String readCommand() {
         Scanner sc = new Scanner(System.in);
@@ -57,7 +59,7 @@ public class Ui {
         System.out.println(LINEN);
     }
 
-    public void showDeletedTask(String taskInfo,  int taskCount) {
+    public void showDeletedTask(String taskInfo, int taskCount) {
         System.out.println(LINE);
         System.out.println("Understood! I've removed this task:\n\t" + taskInfo);
         System.out.println("There are now " + taskCount + " task(s)!");

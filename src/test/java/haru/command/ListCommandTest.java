@@ -1,16 +1,14 @@
 package haru.command;
 
-import haru.HaruException;
-import haru.storage.Storage;
-import haru.task.Task;
-import haru.task.TaskList;
-import haru.task.Todo;
-import haru.ui.Ui;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import haru.HaruException;
+import haru.storage.Storage;
+import haru.task.TaskList;
+import haru.ui.Ui;
 
 class ListCommandTest {
     private TaskList tasks;

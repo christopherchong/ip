@@ -1,7 +1,8 @@
 package haru;
 
 public class HaruException extends Exception {
-    private static final String LINE = "___________________________________________________________________________________\n";
+    private static final String LINE =
+            "___________________________________________________________________________________\n";
 
     public HaruException(String message) {
         super(formatMessage(message));

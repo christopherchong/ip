@@ -63,6 +63,9 @@ public class Storage {
                     LocalDateTime to = LocalDateTime.parse(arguments[4], eventFormatter);
                     tasks.add(new Event(isDone, description, from, to));
                     break;
+
+                default:
+                    throw new HaruException.CorruptedFileException();
                 }
             } catch (DateTimeParseException | ArrayIndexOutOfBoundsException e) {
                 throw new HaruException.CorruptedFileException();
