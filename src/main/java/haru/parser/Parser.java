@@ -12,6 +12,7 @@ import haru.command.ExitCommand;
 import haru.command.ListCommand;
 import haru.command.MarkCommand;
 import haru.command.UnmarkCommand;
+import haru.command.FindCommand;
 import haru.task.Deadline;
 import haru.task.Event;
 import haru.task.Todo;
@@ -93,6 +94,12 @@ public class Parser {
             }
             int index = Integer.parseInt(arguments) - 1;
             return new DeleteCommand(index);
+        }
+        case "find": {
+            if (arguments.isEmpty()) {
+                throw new HaruException.InvalidFindException();
+            }
+            return new FindCommand(arguments);
         }
         case "bye": {
             return new ExitCommand();

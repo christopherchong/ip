@@ -94,4 +94,10 @@ public class HaruException extends Exception {
                     + "Try entering the dates again!");
         }
     }
+
+    public static class InvalidFindException extends HaruException {
+        public InvalidFindException() {
+            super("No description was entered. Enter a keyword!");
+        }
+    }
 }

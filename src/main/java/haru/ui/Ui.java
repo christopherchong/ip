@@ -64,6 +64,17 @@ public class Ui {
         System.out.println(LINEN);
     }
 
+    public void showTaskList(StringBuilder taskList) {
+        System.out.println(LINE);
+        if (taskList.isEmpty()) {
+            System.out.println("There were no tasks matching the description!");
+        } else {
+            System.out.println("Here are the matching tasks in your list:");
+            System.out.print(taskList);
+        }
+        System.out.println(LINEN);
+    }
+
     public void showError(String message) {
         System.out.println(message);
     }
