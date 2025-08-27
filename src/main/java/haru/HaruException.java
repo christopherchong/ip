@@ -1,3 +1,5 @@
+package haru;
+
 public class HaruException extends Exception {
     private static final String LINE = "___________________________________________________________________________________\n";
 

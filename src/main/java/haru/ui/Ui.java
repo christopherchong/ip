@@ -1,4 +1,9 @@
+package haru.ui;
+
 import java.util.Scanner;
+
+import haru.task.Task;
+import haru.task.TaskList;
 
 public class Ui {
     private static final String LINE = "___________________________________________________________________________________";
@@ -11,7 +16,7 @@ public class Ui {
 
     public void showWelcomeMessage() {
         System.out.println(LINE);
-        System.out.println("Hello! I'm Haru\nWhat can I do for you?");
+        System.out.println("Hello! I'm haru.Haru\nWhat can I do for you?");
         System.out.println(LINEN);
     }
 

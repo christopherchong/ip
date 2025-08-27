@@ -1,3 +1,11 @@
+package haru.command;
+
+import haru.HaruException;
+import haru.storage.Storage;
+import haru.task.Task;
+import haru.task.TaskList;
+import haru.ui.Ui;
+
 public class MarkCommand extends Command {
     private final int index;
 

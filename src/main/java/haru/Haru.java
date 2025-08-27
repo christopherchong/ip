@@ -1,6 +1,14 @@
+package haru;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import haru.command.Command;
+import haru.parser.Parser;
+import haru.storage.Storage;
+import haru.task.TaskList;
+import haru.ui.Ui;
 
 public class Haru {
     private final Storage storage;

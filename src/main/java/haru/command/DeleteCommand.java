@@ -1,3 +1,10 @@
+package haru.command;
+
+import haru.HaruException;
+import haru.storage.Storage;
+import haru.task.TaskList;
+import haru.ui.Ui;
+
 public class DeleteCommand extends Command {
     private final int index;
 
