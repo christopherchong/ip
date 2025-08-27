@@ -45,7 +45,7 @@ public class Parser {
             return new UnmarkCommand(index);
         }
         case "todo": {
-            if (arguments.isEmpty()) {
+            if (arguments.isEmpty() || !arguments.matches(".*[a-zA-Z0-9].*")) {
                 throw new HaruException.InvalidTodoException();
             }
             return new AddCommand(new Todo(arguments));
