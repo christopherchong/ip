@@ -10,17 +10,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    private final Path folderPath;
     private final Path filePath;
 
-    public Storage(Path folderPath, Path filePath) {
-        this.folderPath = folderPath;
+    public Storage(Path filePath) {
         this.filePath = filePath;
     }
 
     public void verifyTaskFile() throws IOException {
-        if (!Files.exists(folderPath)) {
-            Files.createDirectories(folderPath);
+        Path parentPath = filePath.getParent();
+        if (!Files.exists(parentPath)) {
+            Files.createDirectories(parentPath);
             Files.createFile(filePath);
         } else if (!Files.exists(filePath)) {
             Files.createFile(filePath);
