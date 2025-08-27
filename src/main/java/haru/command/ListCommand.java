@@ -5,6 +5,9 @@ import haru.storage.Storage;
 import haru.task.TaskList;
 import haru.ui.Ui;
 
+/**
+ * Represents a command that lists tasks in the task list.
+ */
 public class ListCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws HaruException {

@@ -4,6 +4,9 @@ import haru.storage.Storage;
 import haru.task.TaskList;
 import haru.ui.Ui;
 
+/**
+ * Represents a command that terminates the program.
+ */
 public class ExitCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {

@@ -8,7 +8,11 @@ import haru.task.Task;
 import haru.task.TaskList;
 import haru.ui.Ui;
 
+/**
+ * Represents a command that marks a task in the task list.
+ */
 public class UnmarkCommand extends Command {
+    /** Index of the task in the task list to be unmarked. */
     private final int index;
 
     public UnmarkCommand(int index) {
