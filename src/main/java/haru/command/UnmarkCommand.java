@@ -1,5 +1,7 @@
 package haru.command;
 
+import java.io.IOException;
+
 import haru.HaruException;
 import haru.storage.Storage;
 import haru.task.Task;
@@ -14,7 +16,7 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws HaruException {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws HaruException, IOException {
         if (index >= tasks.size()) {
             throw new HaruException.InvalidIndexException();
         }
@@ -24,5 +26,6 @@ public class UnmarkCommand extends Command {
         }
         task.markUndone();
         ui.showUnmarkMessage(task);
+        storage.updateTaskList(tasks);
     }
 }
