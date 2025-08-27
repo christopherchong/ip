@@ -16,7 +16,7 @@ public class Ui {
 
     public void showWelcomeMessage() {
         System.out.println(LINE);
-        System.out.println("Hello! I'm haru.Haru\nWhat can I do for you?");
+        System.out.println("Hello! I'm Haru\nWhat can I do for you?");
         System.out.println(LINEN);
     }
 
