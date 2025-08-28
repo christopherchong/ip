@@ -18,13 +18,23 @@ import haru.task.Task;
 import haru.task.TaskList;
 import haru.task.Todo;
 
+/**
+ * Performs file operations on the task list file. File operations include verification
+ * of the existence of the file, loading from the file and saving to the file.
+ */
 public class Storage {
+    /** Path of the task list file. */
     private final Path filePath;
 
     public Storage(Path filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Checks if the task file exists. If the file does not exist, it will be created.
+     *
+     * @throws IOException If an I/O error occurs while accessing storage.
+     */
     public void verifyTaskFile() throws IOException {
         Path folderPath = filePath.getParent();
         if (!Files.exists(folderPath)) {
@@ -35,6 +45,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Checks if the task file exists. If the file does not exist, it will be created.
+     *
+     * @throws HaruException If the task file is corrupted.
+     * @throws IOException If an I/O error occurs while accessing storage.
+     */
     public ArrayList<Task> loadTaskList() throws HaruException, IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = new File(filePath.toString());

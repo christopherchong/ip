@@ -1,5 +1,6 @@
 package haru.parser;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -12,11 +13,23 @@ import haru.command.ExitCommand;
 import haru.command.ListCommand;
 import haru.command.MarkCommand;
 import haru.command.UnmarkCommand;
+import haru.storage.Storage;
 import haru.task.Deadline;
 import haru.task.Event;
+import haru.task.TaskList;
 import haru.task.Todo;
+import haru.ui.Ui;
 
+/**
+ * Represents a command that converts user input into an executable command.
+ */
 public class Parser {
+    /**
+     * Takes in an input and converts it into a command.
+     *
+     * @param input The user input to be converted to a command.
+     * @throws HaruException If an invalid input is provided.
+     */
     public static Command parse(String input) throws HaruException {
         String command;
         String arguments = "";
