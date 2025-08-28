@@ -67,7 +67,7 @@ public class Haru {
      * @param args Command-line arguments.
      */
     public static void main(String[] args) {
-        Path filePath = Paths.get("src","data", "haru.txt");
+        Path filePath = Paths.get("src", "data", "haru.txt");
         new Haru(filePath).run();
     }
 }

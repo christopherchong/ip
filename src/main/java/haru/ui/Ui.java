@@ -13,8 +13,10 @@ import haru.task.TaskList;
  * </p>
  */
 public class Ui {
-    private static final String LINE = "___________________________________________________________________________________";
-    private static final String LINEN = "___________________________________________________________________________________\n";
+    private static final String LINE =
+            "___________________________________________________________________________________";
+    private static final String LINEN =
+            "___________________________________________________________________________________\n";
 
     /**
      * Reads a command input from the user.
@@ -105,7 +107,7 @@ public class Ui {
      * @param taskInfo The information of the task that was deleted.
      * @param taskCount The number of tasks in the task list after deleting the task.
      */
-    public void showDeletedTask(String taskInfo,  int taskCount) {
+    public void showDeletedTask(String taskInfo, int taskCount) {
         System.out.println(LINE);
         System.out.println("Understood! I've removed this task:\n\t" + taskInfo);
         System.out.println("There are now " + taskCount + " task(s)!");

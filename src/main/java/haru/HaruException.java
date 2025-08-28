@@ -9,7 +9,8 @@ package haru;
  * for consistency in the UI.</p>
  */
 public class HaruException extends Exception {
-    private static final String LINE = "___________________________________________________________________________________\n";
+    private static final String LINE =
+            "___________________________________________________________________________________\n";
 
     /**
      * Creates a {@code HaruException} with an error message,

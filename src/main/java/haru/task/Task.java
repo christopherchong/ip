@@ -31,7 +31,7 @@ public class Task {
      * @param isDone Whether the task is completed.
      * @param type The type of the task. (e.g., 'T', 'D', 'E')
      */
-    public Task(String description, boolean isDone,char type) {
+    public Task(String description, boolean isDone, char type) {
         this.description = description;
         this.isDone = isDone;
         this.type = type;
