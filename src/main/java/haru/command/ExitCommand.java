@@ -5,7 +5,7 @@ import haru.task.TaskList;
 import haru.ui.Ui;
 
 /**
- * Represents a command that terminates the program.
+ * Represents a command that terminates the application.
  */
 public class ExitCommand extends Command {
     @Override

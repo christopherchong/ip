@@ -15,6 +15,11 @@ public class MarkCommand extends Command {
     /** Index of the task in the task list to be marked. */
     private final int index;
 
+    /**
+     * Creates a new {@code MarkCommand} with the index of the task to be marked.
+     *
+     * @param index The index of the task to be marked.
+     */
     public MarkCommand(int index) {
         this.index = index;
     }

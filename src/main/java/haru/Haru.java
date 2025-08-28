@@ -10,11 +10,24 @@ import haru.storage.Storage;
 import haru.task.TaskList;
 import haru.ui.Ui;
 
+/**
+ * Entry point of the Haru task manager application.
+ * <p>
+ * The {@code Haru} class initializes the user interface, storage,
+ * and task list, and facilitates their interaction. It is responsible
+ * for starting the application loop and handling user commands until exit.
+ * </p>
+ */
 public class Haru {
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Creates a new Haru instance with the given file path.
+     *
+     * @param filePath The file path to the task file.
+     */
     public Haru(Path filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -28,6 +41,11 @@ public class Haru {
         }
     }
 
+    /**
+     * Starts the main program loop for Haru.
+     * Displays the welcome message, processes user commands,
+     * and runs until the exit command is provided.
+     */
     public void run() {
         ui.showWelcomeMessage();
         boolean isExit = false;
@@ -43,6 +61,11 @@ public class Haru {
         }
     }
 
+    /**
+     * Entry point of the application.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         Path filePath = Paths.get("src","data", "haru.txt");
         new Haru(filePath).run();

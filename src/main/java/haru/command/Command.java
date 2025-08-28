@@ -11,7 +11,7 @@ import haru.ui.Ui;
  * Represents an abstract command that can be executed in the application.
  * <p>
  * Each {@code Command} defines a specific action that operates on the task list,
- * interacts with the user interface, and may update the task list file.
+ * interacts with the user interface, and may update the task file.
  * Subclasses must implement the {@link #execute(TaskList, Ui, Storage)} method
  * to define their behavior.
  * </p>

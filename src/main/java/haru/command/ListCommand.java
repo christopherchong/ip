@@ -6,7 +6,7 @@ import haru.task.TaskList;
 import haru.ui.Ui;
 
 /**
- * Represents a command that lists tasks in the task list.
+ * Represents a command that lists the tasks in the task file.
  */
 public class ListCommand extends Command {
     @Override
