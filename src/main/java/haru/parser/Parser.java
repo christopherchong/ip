@@ -1,5 +1,6 @@
 package haru.parser;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -12,11 +13,40 @@ import haru.command.ExitCommand;
 import haru.command.ListCommand;
 import haru.command.MarkCommand;
 import haru.command.UnmarkCommand;
+import haru.storage.Storage;
 import haru.task.Deadline;
 import haru.task.Event;
+import haru.task.TaskList;
 import haru.task.Todo;
+import haru.ui.Ui;
 
+/**
+ * Parses user input and converts it into an executable {@link Command}.
+ * <p>
+ * The {@code Parser} identifies the type of command from the input string
+ * and constructs the corresponding {@code Command} object.
+ * </p>
+ */
 public class Parser {
+    /**
+     * Parses the given user input and returns the corresponding {@link Command}.
+     *
+     * <p>List of supported commands:
+     * <ul>
+     *     <li>{@code list}</li>
+     *     <li>{@code mark <index>}</li>
+     *     <li>{@code unmark <index>}</li>
+     *     <li>{@code todo <description>}</li>
+     *     <li>{@code deadline <description> /by <date time>}</li>
+     *     <li>{@code event <description> /from <date time> /to <date time>}</li>
+     *     <li>{@code delete <index>}</li>
+     *     <li>{@code bye}</li>
+     * </ul>
+     *
+     * @param input The input to be parsed.
+     * @return the corresponding {@code Command} object.
+     * @throws HaruException If the input is invalid, incomplete, or formatted incorrectly.
+     */
     public static Command parse(String input) throws HaruException {
         String command;
         String arguments = "";

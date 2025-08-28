@@ -18,13 +18,27 @@ import haru.task.Task;
 import haru.task.TaskList;
 import haru.task.Todo;
 
+/**
+ * Performs file operations on the task file.
+ *
+ * <p>
+ * The {@code Storage} class is responsible for file operations such as verifying the
+ * existence of the task file, loading from the file, and saving to the file.
+ * </p>
+ */
 public class Storage {
+    /** Path of the task list file. */
     private final Path filePath;
 
     public Storage(Path filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Checks if the task file exists. If not, it is created.
+     *
+     * @throws IOException If an I/O error occurs while accessing storage.
+     */
     public void verifyTaskFile() throws IOException {
         Path folderPath = filePath.getParent();
         if (!Files.exists(folderPath)) {
@@ -35,6 +49,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the task file into a {@code TaskList} object.
+     *
+     * @return a {@code TaskList} object with tasks from the task file.
+     * @throws HaruException If the task file is corrupted.
+     * @throws IOException If an I/O error occurs while accessing storage.
+     */
     public ArrayList<Task> loadTaskList() throws HaruException, IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = new File(filePath.toString());
@@ -71,6 +92,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Updates the task file using the current {@link TaskList}.
+     *
+     * @param tasks The {@link TaskList} used to update the task file.
+     * @throws IOException If an I/O error occurs while accessing storage.
+     */
     public void updateTaskList(TaskList tasks) throws IOException {
         FileWriter f = new FileWriter(filePath.toString());
         for (int i = 0; i < tasks.size(); i++) {
