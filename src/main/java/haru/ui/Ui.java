@@ -115,6 +115,22 @@ public class Ui {
     }
 
     /**
+     * Displays specified tasks in the task list to the user.
+     *
+     * @param taskList The list of tasks to be displayed.
+     */
+    public void showTaskList(StringBuilder taskList) {
+        System.out.println(LINE);
+        if (taskList.isEmpty()) {
+            System.out.println("There were no tasks matching the description!");
+        } else {
+            System.out.println("Here are the matching tasks in your list:");
+            System.out.print(taskList);
+        }
+        System.out.println(LINEN);
+    }
+
+    /**
      * Displays an error message to the user.
      *
      * @param message The error message to display.

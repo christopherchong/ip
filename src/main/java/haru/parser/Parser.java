@@ -1,6 +1,5 @@
 package haru.parser;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -10,15 +9,13 @@ import haru.command.AddCommand;
 import haru.command.Command;
 import haru.command.DeleteCommand;
 import haru.command.ExitCommand;
+import haru.command.FindCommand;
 import haru.command.ListCommand;
 import haru.command.MarkCommand;
 import haru.command.UnmarkCommand;
-import haru.storage.Storage;
 import haru.task.Deadline;
 import haru.task.Event;
-import haru.task.TaskList;
 import haru.task.Todo;
-import haru.ui.Ui;
 
 /**
  * Parses user input and converts it into an executable {@link Command}.
@@ -123,6 +120,12 @@ public class Parser {
             }
             int index = Integer.parseInt(arguments) - 1;
             return new DeleteCommand(index);
+        }
+        case "find": {
+            if (arguments.isEmpty()) {
+                throw new HaruException.InvalidFindException();
+            }
+            return new FindCommand(arguments);
         }
         case "bye": {
             return new ExitCommand();

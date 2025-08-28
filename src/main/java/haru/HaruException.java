@@ -148,4 +148,13 @@ public class HaruException extends Exception {
             super("The 'to' and 'from' dates are the same!\n" + "Try entering the dates again!");
         }
     }
+
+    /**
+     * Thrown when no description was provided in the find command.
+     */
+    public static class InvalidFindException extends HaruException {
+        public InvalidFindException() {
+            super("No description was provided. Enter a keyword!");
+        }
+    }
 }
