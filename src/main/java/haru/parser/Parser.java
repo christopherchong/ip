@@ -38,6 +38,7 @@ public class Parser {
      *     <li>{@code event <description> /from <date time> /to <date time>}</li>
      *     <li>{@code delete <index>}</li>
      *     <li>{@code bye}</li>
+     *     <li>{@code find <description>}</li>
      * </ul>
      *
      * @param input The input to be parsed.
