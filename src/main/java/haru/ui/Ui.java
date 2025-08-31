@@ -17,6 +17,11 @@ public class Ui {
             "___________________________________________________________________________________";
     private static final String LINEN =
             "___________________________________________________________________________________\n";
+    private final Scanner sc;
+
+    public Ui() {
+        this.sc = new Scanner(System.in);
+    }
 
     /**
      * Reads a command input from the user.
@@ -24,8 +29,7 @@ public class Ui {
      * @return The user input as a {@code String} object
      */
     public String readCommand() {
-        Scanner sc = new Scanner(System.in);
-        return sc.nextLine();
+        return sc.hasNextLine() ? sc.nextLine() : "";
     }
 
     /**

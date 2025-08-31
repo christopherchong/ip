@@ -1,14 +1,29 @@
 list
-todo study for test
-deadline tutorial 2 /by next Monday
-event project meeting /from Aug 26th 11am /to 12pm
+todo borrow book
+deadline assignment /by 2/12/2025 1800
+event meeting /from 2/10/2025 1500 2/10/2025 1600
+event meeting /from 2/10/2025 1500 /to 2/10/2025 1600
 list
 mark 1
 mark 2
 list
 unmark 2
-mark 3
+unmark 3
+mark 1
+todo read book
+find book
+delete 1
 list
-delete 3
-list
+mark e
+unmark e
+todo
+deadline report /by 2/15/2025 1800
+deadline
+event
+random
+delete
+delete5
+delete 5
+find
+find school
 bye
