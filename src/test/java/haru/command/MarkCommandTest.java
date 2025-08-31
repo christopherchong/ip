@@ -20,12 +20,11 @@ class MarkCommandTest {
     private TaskList tasks;
     private Ui ui;
     private Storage storage;
-    private Path tempFile;
 
     @BeforeEach
     void setUp() throws Exception {
         ui = new Ui();
-        tempFile = Files.createTempFile("haru_test", ".txt");
+        Path tempFile = Files.createTempFile("haru_test", ".txt");
         try (FileWriter writer = new FileWriter(tempFile.toFile())) {
             writer.write("T|0|read book\n");
             writer.write("T|0|write report\n");
@@ -42,7 +41,7 @@ class MarkCommandTest {
     }
 
     @Test
-    void execute_throwsMarkExceptionIfAlreadyMarked() throws HaruException {
+    void execute_throwsMarkExceptionIfAlreadyMarked() {
         tasks.get(0).markDone();
         MarkCommand mark = new MarkCommand(0);
         assertThrows(HaruException.MarkException.class, () -> mark.execute(tasks, ui, storage));

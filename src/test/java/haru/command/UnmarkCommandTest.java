@@ -20,12 +20,11 @@ class UnmarkCommandTest {
     private TaskList tasks;
     private Ui ui;
     private Storage storage;
-    private Path tempFile;
 
     @BeforeEach
     void setUp() throws Exception {
         ui = new Ui();
-        tempFile = Files.createTempFile("haru_test", ".txt");
+        Path tempFile = Files.createTempFile("haru_test", ".txt");
         try (FileWriter writer = new FileWriter(tempFile.toFile())) {
             writer.write("T|1|read book\n");
             writer.write("T|1|write report\n");
@@ -42,7 +41,7 @@ class UnmarkCommandTest {
     }
 
     @Test
-    void execute_throwsUnmarkExceptionIfAlreadyUnmarked() throws HaruException {
+    void execute_throwsUnmarkExceptionIfAlreadyUnmarked() {
         tasks.get(0).markUndone();
         UnmarkCommand unmark = new UnmarkCommand(0);
         assertThrows(HaruException.UnmarkException.class, () -> unmark.execute(tasks, ui, storage));
