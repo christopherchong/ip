@@ -8,6 +8,7 @@ import haru.command.Command;
 import haru.parser.Parser;
 import haru.storage.Storage;
 import haru.task.TaskList;
+import haru.ui.Gui;
 import haru.ui.Ui;
 
 /**
@@ -22,6 +23,7 @@ public class Haru {
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
+    private final Gui gui;
 
     /**
      * Creates a new Haru instance with the given file path.
@@ -30,6 +32,7 @@ public class Haru {
      */
     public Haru(Path filePath) {
         ui = new Ui();
+        gui = new Gui();
         storage = new Storage(filePath);
 
         try {
@@ -47,7 +50,6 @@ public class Haru {
      * and runs until the exit command is provided.
      */
     public void run() {
-        ui.showWelcomeMessage();
         boolean isExit = false;
         while (!isExit) {
             try {
@@ -69,5 +71,21 @@ public class Haru {
     public static void main(String[] args) {
         Path filePath = Paths.get("src", "data", "haru.txt");
         new Haru(filePath).run();
+    }
+
+    public String showGreetings() {
+        return gui.showWelcomeMessage();
+    }
+
+    public String getResponse(String input) {
+        String response;
+        try {
+            Command c = Parser.parse(input);
+            response = c.execute(tasks, gui, storage);
+        } catch (HaruException | IOException e) {
+            response = gui.showError(e.getMessage());
+        }
+
+        return response;
     }
 }

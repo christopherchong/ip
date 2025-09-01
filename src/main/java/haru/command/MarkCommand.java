@@ -6,6 +6,7 @@ import haru.HaruException;
 import haru.storage.Storage;
 import haru.task.Task;
 import haru.task.TaskList;
+import haru.ui.Gui;
 import haru.ui.Ui;
 
 /**
@@ -34,7 +35,21 @@ public class MarkCommand extends Command {
             throw new HaruException.MarkException();
         }
         task.markDone();
-        ui.showMarkMessage(task);
         storage.updateTaskList(tasks);
+        ui.showMarkMessage(task);
+    }
+
+    @Override
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
+        if (index >= tasks.size()) {
+            throw new HaruException.InvalidIndexException();
+        }
+        Task task = tasks.get(index);
+        if (task.getStatus().equals("X")) {
+            throw new HaruException.MarkException();
+        }
+        task.markDone();
+        storage.updateTaskList(tasks);
+        return gui.showMarkMessage(task);
     }
 }

@@ -6,6 +6,7 @@ import haru.HaruException;
 import haru.storage.Storage;
 import haru.task.Task;
 import haru.task.TaskList;
+import haru.ui.Gui;
 import haru.ui.Ui;
 
 /**
@@ -34,7 +35,21 @@ public class UnmarkCommand extends Command {
             throw new HaruException.UnmarkException();
         }
         task.markUndone();
-        ui.showUnmarkMessage(task);
         storage.updateTaskList(tasks);
+        ui.showUnmarkMessage(task);
+    }
+
+    @Override
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
+        if (index >= tasks.size()) {
+            throw new HaruException.InvalidIndexException();
+        }
+        Task task = tasks.get(index);
+        if (task.getStatus().equals(" ")) {
+            throw new HaruException.UnmarkException();
+        }
+        task.markUndone();
+        storage.updateTaskList(tasks);
+        return gui.showUnmarkMessage(task);
     }
 }
