@@ -1,0 +1,2 @@
+T|1|borrow book
+D|0|assignment|2025-12-02 18:00
