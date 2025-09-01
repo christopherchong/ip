@@ -5,6 +5,7 @@ import java.io.IOException;
 import haru.HaruException;
 import haru.storage.Storage;
 import haru.task.TaskList;
+import haru.ui.Gui;
 import haru.ui.Ui;
 
 /**
@@ -31,7 +32,19 @@ public class DeleteCommand extends Command {
 
         String taskInfo = tasks.get(index).getTaskInfo();
         tasks.remove(index);
-        ui.showDeletedTask(taskInfo, tasks.size());
         storage.updateTaskList(tasks);
+        ui.showDeletedTask(taskInfo, tasks.size());
+    }
+
+    @Override
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
+        if (index >= tasks.size()) {
+            throw new HaruException.InvalidIndexException();
+        }
+
+        String taskInfo = tasks.get(index).getTaskInfo();
+        tasks.remove(index);
+        storage.updateTaskList(tasks);
+        return gui.showDeletedTask(taskInfo, tasks.size());
     }
 }

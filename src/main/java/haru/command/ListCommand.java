@@ -3,6 +3,7 @@ package haru.command;
 import haru.HaruException;
 import haru.storage.Storage;
 import haru.task.TaskList;
+import haru.ui.Gui;
 import haru.ui.Ui;
 
 /**
@@ -15,5 +16,13 @@ public class ListCommand extends Command {
             throw new HaruException.NoTasksException();
         }
         ui.showAllTasks(tasks);
+    }
+
+    @Override
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException {
+        if (tasks.isEmpty()) {
+            throw new HaruException.NoTasksException();
+        }
+        return gui.showAllTasks(tasks);
     }
 }
