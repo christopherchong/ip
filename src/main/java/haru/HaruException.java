@@ -9,8 +9,8 @@ package haru;
  * for consistency in the UI.</p>
  */
 public class HaruException extends Exception {
-    private static final String LINE =
-            "________________________________________\n";
+    // private static final String LINE =
+    //        "________________________________________\n";
 
     /**
      * Creates a {@code HaruException} with an error message,
@@ -29,7 +29,7 @@ public class HaruException extends Exception {
      * @return The error message with horizontal separator lines surrounding it.
      */
     private static String formatMessage(String message) {
-        return LINE + message + "\n" + LINE;
+        return message;
     }
 
     /**

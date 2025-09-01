@@ -1,7 +1,5 @@
 package haru.ui;
 
-import java.util.Scanner;
-
 import haru.task.Task;
 import haru.task.TaskList;
 
@@ -13,41 +11,18 @@ import haru.task.TaskList;
  * </p>
  */
 public class Gui {
-    private static final String LINE =
-            "________________________________________";
-    private static final String LINEN =
-            "________________________________________\n";
-    private final Scanner sc;
-
-    public Gui() {
-        this.sc = new Scanner(System.in);
-    }
-
-    /**
-     * Reads a command input from the user.
-     *
-     * @return The user input as a {@code String} object
-     */
-    public String readCommand() {
-        return sc.hasNextLine() ? sc.nextLine() : "";
-    }
-
     /**
      * Displays the welcome message when the application starts.
      */
     public String showWelcomeMessage() {
-        return LINE + "\n"
-                + "Hello! I'm Haru\nWhat can I do for you?\n"
-                + LINEN;
+        return "Hello! I'm Haru\nWhat can I do for you?";
     }
 
     /**
      * Displays the exit message when the application ends.
      */
     public String showExitMessage() {
-        return LINE + "\n"
-                + "Bye. Hope to see you again soon!\n"
-                + LINEN;
+        return "Bye. Hope to see you again soon!";
     }
 
     /**
@@ -56,10 +31,8 @@ public class Gui {
      * @param task The task that was marked.
      */
     public String showMarkMessage(Task task) {
-        return LINE + "\n"
-                + "Nice! I've marked this task as done:\n"
-                + "\t" + task.getTaskInfo() + "\n"
-                + LINEN;
+        return "Nice! I've marked this task as done:\n"
+                + task.getTaskInfo();
     }
 
     /**
@@ -68,10 +41,8 @@ public class Gui {
      * @param task The task that was unmarked.
      */
     public String showUnmarkMessage(Task task) {
-        return LINE + "\n"
-                + "Got it! I've marked this task as not done yet:\n"
-                + "\t" + task.getTaskInfo() + "\n"
-                + LINEN;
+        return "Got it! I've marked this task as not done yet:\n"
+                + task.getTaskInfo();
     }
 
     /**
@@ -81,12 +52,10 @@ public class Gui {
      */
     public String showAllTasks(TaskList tasks) {
         StringBuilder sb = new StringBuilder();
-        sb.append(LINE).append("\n");
         sb.append("Here are the tasks that you've set:\n");
         for (int i = 0; i < tasks.size(); i++) {
-            sb.append("\t").append(i + 1).append(". ").append(tasks.get(i).getTaskInfo()).append("\n");
+            sb.append(i + 1).append(". ").append(tasks.get(i).getTaskInfo()).append("\n");
         }
-        sb.append(LINEN);
         return sb.toString();
     }
 
@@ -99,11 +68,9 @@ public class Gui {
      * @param taskCount The number of tasks in the task list after adding the new task.
      */
     public String showAddedTask(Task task, int taskCount) {
-        return LINE + "\n"
-                + "Got it. I've added this task:\n"
-                + "\t" + task.getTaskInfo() + "\n"
-                + "There are now " + taskCount + " task(s)!\n"
-                + LINEN;
+        return "Got it. I've added this task:\n"
+                + task.getTaskInfo() + "\n"
+                + "There are now " + taskCount + " task(s)!";
     }
 
     /**
@@ -114,10 +81,8 @@ public class Gui {
      * @param taskCount The number of tasks in the task list after deleting the task.
      */
     public String showDeletedTask(String taskInfo, int taskCount) {
-        return LINE + "\n"
-                + "Understood! I've removed this task:\n\t" + taskInfo + "\n"
-                + "There are now " + taskCount + " task(s)!\n"
-                + LINEN;
+        return "Understood! I've removed this task:\n" + taskInfo + "\n"
+                + "There are now " + taskCount + " task(s)!";
     }
 
     /**
@@ -127,14 +92,12 @@ public class Gui {
      */
     public String showTaskList(StringBuilder taskList) {
         StringBuilder sb = new StringBuilder();
-        sb.append(LINE).append("\n");
         if (taskList.isEmpty()) {
             sb.append("There were no tasks matching the description!\n");
         } else {
             sb.append("Here are the matching tasks in your list:\n");
             sb.append(taskList);
         }
-        sb.append(LINEN);
         return sb.toString();
     }
 
