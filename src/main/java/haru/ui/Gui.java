@@ -56,6 +56,7 @@ public class Gui {
         for (int i = 0; i < tasks.size(); i++) {
             sb.append(i + 1).append(". ").append(tasks.get(i).getTaskInfo()).append("\n");
         }
+        sb.deleteCharAt(sb.lastIndexOf("\n"));
         return sb.toString();
     }
 
