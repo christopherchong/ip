@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  * A GUI for Haru using FXML.
  */
 public class Main extends Application {
-    Path filePath = Paths.get("src", "data", "haru.txt");
+    private final Path filePath = Paths.get("src", "data", "haru.txt");
     private final Haru haru = new Haru(filePath);
 
     @Override
@@ -23,7 +23,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setHaru(haru);  // inject the Haru instance
+            fxmlLoader.<MainWindow>getController().setHaru(haru);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
