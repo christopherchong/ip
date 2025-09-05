@@ -31,7 +31,8 @@ public class FindCommand extends Command {
         StringBuilder taskList = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).getTaskInfo().contains(description)) {
-                taskList.append("\t").append(i + 1).append(". ").append(tasks.get(i).getTaskInfo()).append("\n");
+                String task = (i + 1) + ". " + tasks.get(i).getTaskInfo() + "\n";
+                taskList.append(task);
             }
         }
         ui.showTaskList(taskList);
@@ -46,7 +47,8 @@ public class FindCommand extends Command {
         StringBuilder taskList = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).getTaskInfo().contains(description)) {
-                taskList.append("\t").append(i + 1).append(". ").append(tasks.get(i).getTaskInfo()).append("\n");
+                String task = (i + 1) + ". " + tasks.get(i).getTaskInfo() + "\n";
+                taskList.append(task);
             }
         }
         return gui.showTaskList(taskList);
