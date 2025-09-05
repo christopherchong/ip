@@ -45,7 +45,7 @@ public class Haru {
     }
 
     /**
-     * Starts the main program loop for Haru.
+     * Starts the main program loop for Haru (in the Text UI).
      * Displays the welcome message, processes user commands,
      * and runs until the exit command is provided.
      */
@@ -73,10 +73,17 @@ public class Haru {
         new Haru(filePath).run();
     }
 
+    /**
+     * Displays welcome message upon starting the application.
+     */
     public String showGreetings() {
         return gui.showWelcomeMessage();
     }
 
+    /**
+     * Parses user input into a command to retrieve the response.
+     * Used in the GUI application.
+     */
     public String getResponse(String input) {
         String response;
         try {
