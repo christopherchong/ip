@@ -31,6 +31,7 @@ public class Storage {
     private final Path filePath;
 
     public Storage(Path filePath) {
+        assert filePath != null : "Storage file path should not be null";
         this.filePath = filePath;
     }
 

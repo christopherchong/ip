@@ -31,6 +31,7 @@ public class MarkCommand extends Command {
             throw new HaruException.InvalidIndexException();
         }
         Task task = tasks.get(index);
+        assert task != null : "Task to mark should not be null";
         if (task.getStatus().equals("X")) {
             throw new HaruException.MarkException();
         }
@@ -45,6 +46,7 @@ public class MarkCommand extends Command {
             throw new HaruException.InvalidIndexException();
         }
         Task task = tasks.get(index);
+        assert task != null : "Task to mark should not be null";
         if (task.getStatus().equals("X")) {
             throw new HaruException.MarkException();
         }

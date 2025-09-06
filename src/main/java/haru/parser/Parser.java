@@ -51,7 +51,7 @@ public class Parser {
         if (input.contains(" ")) {
             String[] inputArray = input.split(" ", 2);
             command = inputArray[0];
-            assert command != null : "There should be a command after parsing";
+            assert command != null : "There should be a command after parsing user input";
             arguments = inputArray[1];
         } else {
             command = input;
@@ -94,7 +94,7 @@ public class Parser {
                 throw new HaruException.InvalidEventException();
             }
             String[] eventArguments = arguments.split(" /from ", 2);
-            assert eventArguments.length == 2 : "The array should store a description and two datetimes";
+            assert eventArguments.length == 2 : "eventArguments should store a description and two datetimes";
             String eventDescription = eventArguments[0];
             String dates = eventArguments[1];
             String[] eventDates = dates.split(" /to ", 2);
