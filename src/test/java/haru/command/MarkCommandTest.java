@@ -14,16 +14,16 @@ import org.junit.jupiter.api.Test;
 import haru.HaruException;
 import haru.storage.Storage;
 import haru.task.TaskList;
-import haru.ui.Ui;
+import haru.ui.Gui;
 
 class MarkCommandTest {
     private TaskList tasks;
-    private Ui ui;
+    private Gui gui;
     private Storage storage;
 
     @BeforeEach
     void setUp() throws Exception {
-        ui = new Ui();
+        gui = new Gui();
         Path tempFile = Files.createTempFile("haru_test", ".txt");
         try (FileWriter writer = new FileWriter(tempFile.toFile())) {
             writer.write("T|0|read book\n");
@@ -36,7 +36,7 @@ class MarkCommandTest {
     @Test
     void execute_marksTaskSuccessfully() throws HaruException, IOException {
         MarkCommand mark = new MarkCommand(0);
-        mark.execute(tasks, ui, storage);
+        mark.execute(tasks, gui, storage);
         assertEquals("X", tasks.get(0).getStatus(), "Task should be marked done");
     }
 
@@ -44,12 +44,12 @@ class MarkCommandTest {
     void execute_throwsMarkExceptionIfAlreadyMarked() {
         tasks.get(0).markDone();
         MarkCommand mark = new MarkCommand(0);
-        assertThrows(HaruException.MarkException.class, () -> mark.execute(tasks, ui, storage));
+        assertThrows(HaruException.MarkException.class, () -> mark.execute(tasks, gui, storage));
     }
 
     @Test
     void execute_throwsInvalidIndexExceptionIfIndexOutOfBounds() {
         MarkCommand mark = new MarkCommand(5);
-        assertThrows(HaruException.InvalidIndexException.class, () -> mark.execute(tasks, ui, storage));
+        assertThrows(HaruException.InvalidIndexException.class, () -> mark.execute(tasks, gui, storage));
     }
 }

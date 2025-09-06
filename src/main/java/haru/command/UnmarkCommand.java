@@ -7,7 +7,6 @@ import haru.storage.Storage;
 import haru.task.Task;
 import haru.task.TaskList;
 import haru.ui.Gui;
-import haru.ui.Ui;
 
 /**
  * Represents a command that marks a task in the task list.
@@ -26,32 +25,25 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws HaruException, IOException {
-        if (index >= tasks.size()) {
-            throw new HaruException.InvalidIndexException();
-        }
-        Task task = tasks.get(index);
-        assert task != null : "Task to unmark should not be null";
-        if (task.getStatus().equals(" ")) {
-            throw new HaruException.UnmarkException();
-        }
-        task.markUndone();
-        storage.updateTaskList(tasks);
-        ui.showUnmarkMessage(task);
-    }
-
-    @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
-        if (index >= tasks.size()) {
-            throw new HaruException.InvalidIndexException();
-        }
+        validateIndex(tasks, index);
         Task task = tasks.get(index);
         assert task != null : "Task to unmark should not be null";
-        if (task.getStatus().equals(" ")) {
-            throw new HaruException.UnmarkException();
-        }
+        validateStatus(task);
         task.markUndone();
         storage.updateTaskList(tasks);
         return gui.showUnmarkMessage(task);
+    }
+
+    private static void validateIndex(TaskList tasks, int index) throws HaruException {
+        if (index >= tasks.size()) {
+            throw new HaruException.InvalidIndexException();
+        }
+    }
+
+    private static void validateStatus(Task task) throws HaruException {
+        if (task.getStatus().equals(" ")) {
+            throw new HaruException.UnmarkException();
+        }
     }
 }

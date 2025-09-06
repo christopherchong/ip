@@ -52,9 +52,11 @@ public class Gui {
      */
     public String showAllTasks(TaskList tasks) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Here are the tasks that you've set:\n");
-        for (int i = 0; i < tasks.size(); i++) {
-            sb.append(i + 1).append(". ").append(tasks.get(i).getTaskInfo()).append("\n");
+        int taskCount = tasks.size();
+        for (int i = 0; i < taskCount; i++) {
+            String currentTaskInfo = tasks.get(i).getTaskInfo();
+            String task = (i + 1) + ". " + currentTaskInfo + "\n";
+            sb.append(task);
         }
         sb.deleteCharAt(sb.lastIndexOf("\n"));
         return sb.toString();
@@ -82,7 +84,8 @@ public class Gui {
      * @param taskCount The number of tasks in the task list after deleting the task.
      */
     public String showDeletedTask(String taskInfo, int taskCount) {
-        return "Understood! I've removed this task:\n" + taskInfo + "\n"
+        return "Understood! I've removed this task:\n"
+                + taskInfo + "\n"
                 + "There are now " + taskCount + " task(s)!";
     }
 
@@ -91,7 +94,7 @@ public class Gui {
      *
      * @param taskList The list of tasks to be displayed.
      */
-    public String showTaskList(StringBuilder taskList) {
+    public String showSpecifiedTasks(StringBuilder taskList) {
         StringBuilder sb = new StringBuilder();
         if (taskList.isEmpty()) {
             sb.append("There were no tasks matching the description!\n");

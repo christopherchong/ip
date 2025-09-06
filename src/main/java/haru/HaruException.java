@@ -9,9 +9,6 @@ package haru;
  * for consistency in the UI.</p>
  */
 public class HaruException extends Exception {
-    // private static final String LINE =
-    //        "________________________________________\n";
-
     /**
      * Creates a {@code HaruException} with an error message,
      * formatted with horizontal separator lines.

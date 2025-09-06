@@ -37,11 +37,15 @@ public class Deadline extends Task {
 
     @Override
     public String getTaskInfo() {
-        return super.getTaskInfo() + " (by: " + DateTimeUtil.formatForDisplay(by) + ")";
+        return super.getTaskInfo()
+                + " (by: " + DateTimeUtil.formatForDisplay(by)
+                + ")";
     }
 
     @Override
     public String getTaskInfoForFile() {
-        return super.getTaskInfoForFile() + "|" + DateTimeUtil.formatForStorage(by);
+        return super.getTaskInfoForFile()
+                + "|"
+                + DateTimeUtil.formatForStorage(by);
     }
 }
