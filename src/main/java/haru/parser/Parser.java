@@ -26,7 +26,7 @@ public class Parser {
      *     <li>{@code event <description> /from <date time> /to <date time>}</li>
      *     <li>{@code delete <index>}</li>
      *     <li>{@code find <description>}</li>
-     *     <li>{@code tag <description>}</li>
+     *     <li>{@code tag <index> <tag name>}</li>
      *     <li>{@code bye}</li>
      * </ul>
      *
