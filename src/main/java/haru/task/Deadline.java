@@ -1,7 +1,8 @@
 package haru.task;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import haru.DateTimeUtil;
 
 /**
  * Represents a {@code Deadline} task with a specified due date/time.
@@ -34,11 +35,11 @@ public class Deadline extends Task {
 
     @Override
     public String getTaskInfo() {
-        return super.getTaskInfo() + " (by: " + by.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + ")";
+        return super.getTaskInfo() + " (by: " + DateTimeUtil.formatForDisplay(by) + ")";
     }
 
     @Override
     public String getTaskInfoForFile() {
-        return super.getTaskInfoForFile() + "|" + by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        return super.getTaskInfoForFile() + "|" + DateTimeUtil.formatForStorage(by);
     }
 }

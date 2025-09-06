@@ -1,7 +1,8 @@
 package haru.task;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import haru.DateTimeUtil;
 
 /**
  * Represents an {@code Event} task with a start and end date/time.
@@ -39,15 +40,13 @@ public class Event extends Task {
 
     @Override
     public String getTaskInfo() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
-        return super.getTaskInfo() + " (from: " + startDateTime.format(formatter)
-                + " to: " + endDateTime.format(formatter) + ")";
+        return super.getTaskInfo() + " (from: " + DateTimeUtil.formatForDisplay(startDateTime)
+                + " to: " + DateTimeUtil.formatForDisplay(endDateTime) + ")";
     }
 
     @Override
     public String getTaskInfoForFile() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return super.getTaskInfoForFile() + "|" + startDateTime.format(formatter)
-                + "|" + endDateTime.format(formatter);
+        return super.getTaskInfoForFile() + "|" + DateTimeUtil.formatForStorage(startDateTime)
+                + "|" + DateTimeUtil.formatForStorage(endDateTime);
     }
 }

@@ -1,9 +1,8 @@
 package haru.parser;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
+import haru.DateTimeUtil;
 import haru.HaruException;
 import haru.command.AddCommand;
 import haru.command.Command;
@@ -52,6 +51,7 @@ public class Parser {
         if (input.contains(" ")) {
             String[] inputArray = input.split(" ", 2);
             command = inputArray[0];
+            assert command != null : "There should be a command after parsing";
             arguments = inputArray[1];
         } else {
             command = input;
@@ -83,14 +83,10 @@ public class Parser {
                 throw new HaruException.InvalidDeadlineException();
             }
             String[] argumentsArray = arguments.split(" /by ", 2);
+            assert argumentsArray.length == 2 : "The array should store a description and 'by' datetime";
             String description = argumentsArray[0];
-            try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y Hmm");
-                LocalDateTime by = LocalDateTime.parse(argumentsArray[1], formatter);
-                return new AddCommand(new Deadline(description, by));
-            } catch (DateTimeParseException e) {
-                throw new HaruException.DateTimeParseException();
-            }
+            LocalDateTime by = DateTimeUtil.parseInput(argumentsArray[1]);
+            return new AddCommand(new Deadline(description, by));
         }
         case "event": {
             if (!arguments.contains(" /from ") || !arguments.contains(" /to ")
@@ -98,22 +94,19 @@ public class Parser {
                 throw new HaruException.InvalidEventException();
             }
             String[] argumentsArray = arguments.split(" /from ", 2);
+            assert argumentsArray.length == 2 : "The array should store a description and two datetimes";
             String description = argumentsArray[0];
             String dates = argumentsArray[1];
             String[] datesArray = dates.split(" /to ", 2);
-            try {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y Hmm");
-                LocalDateTime from = LocalDateTime.parse(datesArray[0], formatter);
-                LocalDateTime to = LocalDateTime.parse(datesArray[1], formatter);
-                if (to.isBefore(from)) {
-                    throw new HaruException.DateTimeOrderException();
-                } else if (to.isEqual(from)) {
-                    throw new HaruException.SameDateTimeException();
-                }
-                return new AddCommand(new Event(description, from, to));
-            } catch (DateTimeParseException e) {
-                throw new HaruException.DateTimeParseException();
+            assert datesArray.length == 2 : "The array should store 'from' and 'to' datetime";
+            LocalDateTime from = DateTimeUtil.parseInput(datesArray[0]);
+            LocalDateTime to = DateTimeUtil.parseInput(datesArray[1]);
+            if (to.isBefore(from)) {
+                throw new HaruException.DateTimeOrderException();
+            } else if (to.isEqual(from)) {
+                throw new HaruException.SameDateTimeException();
             }
+            return new AddCommand(new Event(description, from, to));
         }
         case "delete": {
             if (arguments.isEmpty() || !arguments.matches("\\d+")) {

@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import haru.DateTimeUtil;
 import haru.HaruException;
 import haru.task.Deadline;
 import haru.task.Event;
@@ -73,15 +73,13 @@ public class Storage {
                     break;
 
                 case 'D':
-                    DateTimeFormatter deadlineFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                    LocalDateTime by = LocalDateTime.parse(arguments[3], deadlineFormatter);
+                    LocalDateTime by = DateTimeUtil.parseStorage(arguments[3]);
                     tasks.add(new Deadline(isDone, description, by));
                     break;
 
                 case 'E':
-                    DateTimeFormatter eventFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                    LocalDateTime from = LocalDateTime.parse(arguments[3], eventFormatter);
-                    LocalDateTime to = LocalDateTime.parse(arguments[4], eventFormatter);
+                    LocalDateTime from = DateTimeUtil.parseStorage(arguments[3]);
+                    LocalDateTime to = DateTimeUtil.parseStorage(arguments[4]);
                     tasks.add(new Event(isDone, description, from, to));
                     break;
 
