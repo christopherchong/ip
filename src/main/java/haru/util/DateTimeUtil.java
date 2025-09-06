@@ -17,9 +17,9 @@ public class DateTimeUtil {
     /**
      * Parses a datetime user input into a {@link LocalDateTime}.
      *
-     * @param input the user input
-     * @return the corresponding LocalDateTime
-     * @throws HaruException.DateTimeParseException if input is invalid
+     * @param input The user input.
+     * @return The corresponding LocalDateTime.
+     * @throws HaruException.DateTimeParseException If input is invalid.
      */
     public static LocalDateTime parseInput(String input) throws HaruException {
         try {
@@ -32,9 +32,9 @@ public class DateTimeUtil {
     /**
      * Parses a datetime string from task file into a {@link LocalDateTime}.
      *
-     * @param input the stored string
-     * @return the corresponding LocalDateTime
-     * @throws HaruException.CorruptedFileException if input is invalid
+     * @param input The stored string.
+     * @return The corresponding LocalDateTime.
+     * @throws HaruException.CorruptedFileException If input is invalid.
      */
     public static LocalDateTime parseStorage(String input) throws HaruException {
         try {
@@ -47,8 +47,8 @@ public class DateTimeUtil {
     /**
      * Formats a {@link LocalDateTime} for storage in the task file.
      *
-     * @param dateTime a LocalDateTime input
-     * @return the formatted LocalDateTime
+     * @param dateTime The LocalDateTime input.
+     * @return The formatted LocalDateTime.
      */
     public static String formatForStorage(LocalDateTime dateTime) {
         return dateTime.format(STORAGE_FORMATTER);
@@ -57,8 +57,8 @@ public class DateTimeUtil {
     /**
      * Formats a {@link LocalDateTime} for user display.
      *
-     * @param dateTime a LocalDateTime input
-     * @return the formatted LocalDateTime
+     * @param dateTime The LocalDateTime input.
+     * @return The formatted LocalDateTime.
      */
     public static String formatForDisplay(LocalDateTime dateTime) {
         return dateTime.format(DISPLAY_FORMATTER);

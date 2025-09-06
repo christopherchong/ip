@@ -31,6 +31,7 @@ public class UnmarkCommand extends Command {
             throw new HaruException.InvalidIndexException();
         }
         Task task = tasks.get(index);
+        assert task != null : "Task to unmark should not be null";
         if (task.getStatus().equals(" ")) {
             throw new HaruException.UnmarkException();
         }
@@ -45,6 +46,7 @@ public class UnmarkCommand extends Command {
             throw new HaruException.InvalidIndexException();
         }
         Task task = tasks.get(index);
+        assert task != null : "Task to unmark should not be null";
         if (task.getStatus().equals(" ")) {
             throw new HaruException.UnmarkException();
         }
