@@ -2,6 +2,7 @@ package haru.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import haru.storage.Storage;
 import haru.task.TaskList;
 import haru.ui.Gui;
 
-class MarkCommandTest {
+class TagCommandTest {
     private TaskList tasks;
     private Gui gui;
     private Storage storage;
@@ -26,7 +27,7 @@ class MarkCommandTest {
         gui = new Gui();
         Path tempFile = Files.createTempFile("haru_test", ".txt");
         try (FileWriter writer = new FileWriter(tempFile.toFile())) {
-            writer.write("T|0|read book| |\n");
+            writer.write("T|0|read book|#test|\n");
             writer.write("T|0|write report| |\n");
         }
         storage = new Storage(tempFile);
@@ -34,22 +35,21 @@ class MarkCommandTest {
     }
 
     @Test
-    void execute_marksTaskSuccessfully() throws HaruException, IOException {
-        MarkCommand mark = new MarkCommand(0);
-        mark.execute(tasks, gui, storage);
-        assertEquals("X", tasks.get(0).getStatus(), "Task should be marked done");
+    void execute_tagsTaskSuccessfully() throws HaruException, IOException {
+        TagCommand tag = new TagCommand(1, "#fun");
+        tag.execute(tasks, gui, storage);
+        assertTrue(tasks.get(1).getTaskInfo().contains("fun"), "Task should be tagged #fun");
     }
 
     @Test
-    void execute_throwsMarkExceptionIfAlreadyMarked() {
-        tasks.get(0).markDone();
-        MarkCommand mark = new MarkCommand(0);
-        assertThrows(HaruException.MarkException.class, () -> mark.execute(tasks, gui, storage));
+    void execute_throwsInvalidExceptionIfInvalidIndex() {
+        TagCommand tag = new TagCommand(3, "#fun");
+        assertThrows(HaruException.InvalidIndexException.class, () -> tag.execute(tasks, gui, storage));
     }
 
     @Test
-    void execute_throwsInvalidIndexExceptionIfIndexOutOfBounds() {
-        MarkCommand mark = new MarkCommand(5);
-        assertThrows(HaruException.InvalidIndexException.class, () -> mark.execute(tasks, gui, storage));
+    void execute_throwsExistingTagExceptionIfAddingExistingTag() {
+        TagCommand tag = new TagCommand(0, "#test");
+        assertThrows(HaruException.ExistingTagException.class, () -> tag.execute(tasks, gui, storage));
     }
 }

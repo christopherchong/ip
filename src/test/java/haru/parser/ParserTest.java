@@ -9,8 +9,10 @@ import haru.HaruException;
 import haru.command.AddCommand;
 import haru.command.Command;
 import haru.command.DeleteCommand;
+import haru.command.FindCommand;
 import haru.command.ListCommand;
 import haru.command.MarkCommand;
+import haru.command.TagCommand;
 import haru.command.UnmarkCommand;
 
 public class ParserTest {
@@ -165,6 +167,55 @@ public class ParserTest {
     void parseDeleteWithoutNumber2_throwsHaruException() {
         assertThrows(HaruException.NumberFormatException.class, () -> {
             Parser.parse("delete e");
+        });
+    }
+
+    // find
+    @Test
+    void parseFindCommand_returnsFindCommand() throws HaruException {
+        Command cmd = Parser.parse("find book");
+        assertTrue(cmd instanceof FindCommand);
+    }
+
+    @Test
+    void parseFindWithoutKeyword_throwsHaruException() {
+        assertThrows(HaruException.InvalidFindException.class, () -> {
+            Parser.parse("find");
+        });
+    }
+
+    // tag
+    @Test
+    void parseTagCommand_returnsTagCommand() throws HaruException {
+        Command cmd = Parser.parse("tag 1 #test");
+        assertTrue(cmd instanceof TagCommand);
+    }
+
+    @Test
+    void parseTagWithInvalidIndex_throwsHaruException() {
+        assertThrows(HaruException.InvalidTagFormatException.class, () -> {
+            Parser.parse("tag e #test");
+        });
+    }
+
+    @Test
+    void parseTagWithInvalidTag_throwsHaruException() {
+        assertThrows(HaruException.InvalidTagFormatException.class, () -> {
+            Parser.parse("tag 1 test");
+        });
+    }
+
+    @Test
+    void parseTagWithNoTag_throwsHaruException() {
+        assertThrows(HaruException.NoTagException.class, () -> {
+            Parser.parse("tag 1");
+        });
+    }
+
+    @Test
+    void parseTagWithNoArguments_throwsHaruException() {
+        assertThrows(HaruException.NoTagException.class, () -> {
+            Parser.parse("tag");
         });
     }
 

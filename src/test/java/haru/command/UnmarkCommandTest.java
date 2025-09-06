@@ -26,8 +26,8 @@ class UnmarkCommandTest {
         gui = new Gui();
         Path tempFile = Files.createTempFile("haru_test", ".txt");
         try (FileWriter writer = new FileWriter(tempFile.toFile())) {
-            writer.write("T|1|read book\n");
-            writer.write("T|1|write report\n");
+            writer.write("T|1|read book| |\n");
+            writer.write("T|1|write report| |\n");
         }
         storage = new Storage(tempFile);
         tasks = new TaskList(storage.loadTaskList());
