@@ -2,7 +2,7 @@ package haru.task;
 
 import java.time.LocalDateTime;
 
-import haru.DateTimeUtil;
+import haru.util.DateTimeUtil;
 
 /**
  * Represents a {@code Deadline} task with a specified due date/time.

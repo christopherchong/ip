@@ -2,7 +2,6 @@ package haru.parser;
 
 import java.time.LocalDateTime;
 
-import haru.DateTimeUtil;
 import haru.HaruException;
 import haru.command.AddCommand;
 import haru.command.Command;
@@ -15,6 +14,7 @@ import haru.command.UnmarkCommand;
 import haru.task.Deadline;
 import haru.task.Event;
 import haru.task.Todo;
+import haru.util.DateTimeUtil;
 
 /**
  * Parses user input and converts it into an executable {@link Command}.

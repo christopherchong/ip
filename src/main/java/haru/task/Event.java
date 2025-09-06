@@ -2,7 +2,7 @@ package haru.task;
 
 import java.time.LocalDateTime;
 
-import haru.DateTimeUtil;
+import haru.util.DateTimeUtil;
 
 /**
  * Represents an {@code Event} task with a start and end date/time.

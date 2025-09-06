@@ -1,8 +1,10 @@
-package haru;
+package haru.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import haru.HaruException;
 
 /**
  * Utility class for parsing and formatting {@link LocalDateTime}.
