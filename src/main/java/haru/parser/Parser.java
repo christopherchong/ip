@@ -58,75 +58,74 @@ public class Parser {
         }
 
         switch (command) {
-        case "list": {
+        case "list":
             return new ListCommand();
-        }
+
         case "mark":
-        case "unmark": {
+        case "unmark":
             if (arguments.isEmpty() || !arguments.matches("\\d+")) {
                 throw new HaruException.NumberFormatException();
             }
-            int index = Integer.parseInt(arguments) - 1;
+            int taskIndex = Integer.parseInt(arguments) - 1;
             if (command.equals("mark")) {
-                return new MarkCommand(index);
+                return new MarkCommand(taskIndex);
             }
-            return new UnmarkCommand(index);
-        }
-        case "todo": {
+            return new UnmarkCommand(taskIndex);
+
+        case "todo":
             if (arguments.isEmpty() || !arguments.matches(".*[a-zA-Z0-9].*")) {
                 throw new HaruException.InvalidTodoException();
             }
             return new AddCommand(new Todo(arguments));
-        }
-        case "deadline": {
+
+        case "deadline":
             if (!arguments.contains(" /by ")) {
                 throw new HaruException.InvalidDeadlineException();
             }
-            String[] argumentsArray = arguments.split(" /by ", 2);
-            assert argumentsArray.length == 2 : "The array should store a description and 'by' datetime";
-            String description = argumentsArray[0];
-            LocalDateTime by = DateTimeUtil.parseInput(argumentsArray[1]);
-            return new AddCommand(new Deadline(description, by));
-        }
-        case "event": {
+            String[] deadlineArguments = arguments.split(" /by ", 2);
+            assert deadlineArguments.length == 2 : "The array should store a description and 'by' datetime";
+            String deadlineDescription = deadlineArguments[0];
+            LocalDateTime by = DateTimeUtil.parseInput(deadlineArguments[1]);
+            return new AddCommand(new Deadline(deadlineDescription, by));
+
+        case "event":
             if (!arguments.contains(" /from ") || !arguments.contains(" /to ")
                     || arguments.lastIndexOf(" /to ") < arguments.lastIndexOf(" /from ")) {
                 throw new HaruException.InvalidEventException();
             }
-            String[] argumentsArray = arguments.split(" /from ", 2);
-            assert argumentsArray.length == 2 : "The array should store a description and two datetimes";
-            String description = argumentsArray[0];
-            String dates = argumentsArray[1];
-            String[] datesArray = dates.split(" /to ", 2);
-            assert datesArray.length == 2 : "The array should store 'from' and 'to' datetime";
-            LocalDateTime from = DateTimeUtil.parseInput(datesArray[0]);
-            LocalDateTime to = DateTimeUtil.parseInput(datesArray[1]);
+            String[] eventArguments = arguments.split(" /from ", 2);
+            assert eventArguments.length == 2 : "The array should store a description and two datetimes";
+            String eventDescription = eventArguments[0];
+            String dates = eventArguments[1];
+            String[] eventDates = dates.split(" /to ", 2);
+            assert eventDates.length == 2 : "The array should store 'from' and 'to' datetime";
+            LocalDateTime from = DateTimeUtil.parseInput(eventDates[0]);
+            LocalDateTime to = DateTimeUtil.parseInput(eventDates[1]);
             if (to.isBefore(from)) {
                 throw new HaruException.DateTimeOrderException();
             } else if (to.isEqual(from)) {
                 throw new HaruException.SameDateTimeException();
             }
-            return new AddCommand(new Event(description, from, to));
-        }
-        case "delete": {
+            return new AddCommand(new Event(eventDescription, from, to));
+
+        case "delete":
             if (arguments.isEmpty() || !arguments.matches("\\d+")) {
                 throw new HaruException.NumberFormatException();
             }
             int index = Integer.parseInt(arguments) - 1;
             return new DeleteCommand(index);
-        }
-        case "find": {
+
+        case "find":
             if (arguments.isEmpty()) {
                 throw new HaruException.InvalidFindException();
             }
             return new FindCommand(arguments);
-        }
-        case "bye": {
+
+        case "bye":
             return new ExitCommand();
-        }
-        default: {
+
+        default:
             throw new HaruException.InvalidCommandException();
-        }
         }
     }
 }
