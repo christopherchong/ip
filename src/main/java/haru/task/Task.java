@@ -34,7 +34,7 @@ public class Task {
      * @param isDone Whether the task is completed.
      * @param type The type of the task. (e.g., 'T', 'D', 'E')
      */
-    public Task(String description, boolean isDone, char type,  String tags) {
+    public Task(String description, boolean isDone, char type, String tags) {
         assert description != null : "Description should not be null";
         this.description = description;
         this.isDone = isDone;
@@ -52,6 +52,7 @@ public class Task {
         return "[" + type + "] [" + getStatus() + "] " + description + " " + tags;
     }
 
+    /** @return Added tags for the current task. */
     public String getTags() {
         return tags;
     }
@@ -66,6 +67,11 @@ public class Task {
         this.isDone = false;
     }
 
+    /**
+     * Adds a new {@code tag} to the current task.
+     *
+     * @param tag The name of the tag.
+     */
     public void tag(String tag) {
         if (this.tags.equals(" ")) {
             this.tags = tag;
