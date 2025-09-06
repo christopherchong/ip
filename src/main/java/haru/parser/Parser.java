@@ -39,15 +39,15 @@ public class Parser {
         String arguments = parsed[1];
 
         return switch (command) {
-            case "list" -> new ListCommand();
-            case "mark", "unmark" -> MarkParser.parse(arguments, command);
-            case "todo" -> TodoParser.parse(arguments);
-            case "deadline" -> DeadlineParser.parse(arguments);
-            case "event" -> EventParser.parse(arguments);
-            case "delete" -> DeleteParser.parse(arguments);
-            case "find" -> FindParser.parse(arguments);
-            case "bye" -> new ExitCommand();
-            default -> throw new HaruException.InvalidCommandException();
+        case "list" -> new ListCommand();
+        case "mark", "unmark" -> MarkParser.parse(arguments, command);
+        case "todo" -> TodoParser.parse(arguments);
+        case "deadline" -> DeadlineParser.parse(arguments);
+        case "event" -> EventParser.parse(arguments);
+        case "delete" -> DeleteParser.parse(arguments);
+        case "find" -> FindParser.parse(arguments);
+        case "bye" -> new ExitCommand();
+        default -> throw new HaruException.InvalidCommandException();
         };
     }
 
