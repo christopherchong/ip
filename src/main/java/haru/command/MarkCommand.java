@@ -28,6 +28,7 @@ public class MarkCommand extends Command {
     public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
         validateIndex(tasks, index);
         Task task = tasks.get(index);
+        assert task != null : "Task to mark should not be null";
         validateStatus(task);
         task.markDone();
         storage.updateTaskList(tasks);

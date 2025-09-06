@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import haru.HaruException;
 import haru.storage.Storage;
+import haru.task.Task;
 import haru.task.TaskList;
 import haru.ui.Gui;
 
@@ -26,7 +27,9 @@ public class DeleteCommand extends Command {
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
         validateIndex(tasks, index);
-        String taskInfo = tasks.get(index).getTaskInfo();
+        Task task = tasks.get(index);
+        assert task != null : "Task to delete should not be null";
+        String taskInfo = task.getTaskInfo();
         tasks.remove(index);
         storage.updateTaskList(tasks);
         return gui.showDeletedTask(taskInfo, tasks.size());

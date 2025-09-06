@@ -36,6 +36,7 @@ public class Storage {
      * @param filePath The file path.
      */
     public Storage(Path filePath) {
+        assert filePath != null : "Storage file path should not be null";
         this.filePath = filePath;
     }
 

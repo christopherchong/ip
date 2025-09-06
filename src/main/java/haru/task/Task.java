@@ -19,6 +19,7 @@ public class Task {
      * @param type The type of the task. (e.g., 'T', 'D', 'E')
      */
     public Task(String description, char type) {
+        assert description != null : "Description should not be null";
         this.description = description;
         this.isDone = false;
         this.type = type;
@@ -32,6 +33,7 @@ public class Task {
      * @param type The type of the task. (e.g., 'T', 'D', 'E')
      */
     public Task(String description, boolean isDone, char type) {
+        assert description != null : "Description should not be null";
         this.description = description;
         this.isDone = isDone;
         this.type = type;
