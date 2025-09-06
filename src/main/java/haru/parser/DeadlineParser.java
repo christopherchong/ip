@@ -8,7 +8,17 @@ import haru.command.Command;
 import haru.task.Deadline;
 import haru.util.DateTimeUtil;
 
+/**
+ * Parses {@link Deadline} input and converts it into an {@link AddCommand}.
+ */
 public class DeadlineParser {
+    /**
+     * Parses {@link Deadline} input and converts it into an {@link AddCommand}.
+     *
+     * @param arguments The {@code Deadline} input to be parsed.
+     * @return the corresponding {@code AddCommand} object.
+     * @throws HaruException If the input is invalid.
+     */
     public static Command parse(String arguments) throws HaruException {
         validateFormat(arguments);
         String[] deadlineArguments = arguments.split(" /by ", 2);

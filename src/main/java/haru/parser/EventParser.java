@@ -8,7 +8,17 @@ import haru.command.Command;
 import haru.task.Event;
 import haru.util.DateTimeUtil;
 
+/**
+ * Parses {@link Event} input and converts it into an {@link AddCommand}.
+ */
 public class EventParser {
+    /**
+     * Parses {@link Event} input and converts it into an {@link AddCommand}.
+     *
+     * @param arguments The {@code Event} input to be parsed.
+     * @return the corresponding {@code AddCommand} object.
+     * @throws HaruException If the input is invalid.
+     */
     public static Command parse(String arguments) throws HaruException {
         validateFormat(arguments);
         String[] eventArguments = arguments.split(" /from ", 2);
