@@ -33,6 +33,7 @@ public class MarkCommand extends Command {
         if (task.getStatus().equals("X")) {
             throw new HaruException.MarkException();
         }
+
         task.markDone();
         storage.updateTaskList(tasks);
         return gui.showMarkMessage(task);

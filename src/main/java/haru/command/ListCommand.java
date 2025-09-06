@@ -14,6 +14,7 @@ public class ListCommand extends Command {
         if (tasks.isEmpty()) {
             throw new HaruException.NoTasksException();
         }
+
         return gui.showAllTasks(tasks);
     }
 }

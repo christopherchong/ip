@@ -33,6 +33,7 @@ public class UnmarkCommand extends Command {
         if (task.getStatus().equals(" ")) {
             throw new HaruException.UnmarkException();
         }
+
         task.markUndone();
         storage.updateTaskList(tasks);
         return gui.showUnmarkMessage(task);
