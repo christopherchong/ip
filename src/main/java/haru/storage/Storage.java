@@ -48,8 +48,8 @@ public class Storage {
         Path folderPath = filePath.getParent();
         if (!Files.exists(folderPath)) {
             Files.createDirectories(folderPath);
-            Files.createFile(filePath);
-        } else if (!Files.exists(filePath)) {
+        }
+        if (!Files.exists(filePath)) {
             Files.createFile(filePath);
         }
     }
@@ -69,25 +69,23 @@ public class Storage {
             try {
                 String task = sc.nextLine();
                 String[] arguments = task.split("\\|");
+                char taskType = task.charAt(0);
                 boolean isDone = arguments[1].equals("1");
                 String description = arguments[2];
 
-                switch (task.charAt(0)) {
+                switch (taskType) {
                 case 'T':
                     tasks.add(new Todo(isDone, description));
                     break;
-
                 case 'D':
                     LocalDateTime by = DateTimeUtil.parseStorage(arguments[3]);
                     tasks.add(new Deadline(isDone, description, by));
                     break;
-
                 case 'E':
                     LocalDateTime from = DateTimeUtil.parseStorage(arguments[3]);
                     LocalDateTime to = DateTimeUtil.parseStorage(arguments[4]);
                     tasks.add(new Event(isDone, description, from, to));
                     break;
-
                 default:
                     throw new HaruException.CorruptedFileException();
                 }
