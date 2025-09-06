@@ -30,6 +30,11 @@ public class Storage {
     /** Path of the task list file. */
     private final Path filePath;
 
+    /**
+     * Creates a new {@code Storage} with the specified file path.
+     *
+     * @param filePath The file path.
+     */
     public Storage(Path filePath) {
         this.filePath = filePath;
     }
