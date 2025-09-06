@@ -23,10 +23,7 @@ public class FindCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException {
-        if (tasks.isEmpty()) {
-            throw new HaruException.NoTasksException();
-        }
-
+        checkIfTaskListIsEmpty(tasks);
         StringBuilder taskList = new StringBuilder();
         int taskCount = tasks.size();
         for (int i = 0; i < taskCount; i++) {
@@ -37,5 +34,11 @@ public class FindCommand extends Command {
             }
         }
         return gui.showSpecifiedTasks(taskList);
+    }
+
+    private static void checkIfTaskListIsEmpty(TaskList tasks) throws HaruException {
+        if (tasks.isEmpty()) {
+            throw new HaruException.NoTasksException();
+        }
     }
 }

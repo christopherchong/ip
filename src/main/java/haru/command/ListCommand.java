@@ -11,10 +11,13 @@ import haru.ui.Gui;
 public class ListCommand extends Command {
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException {
+        checkIfTaskListIsEmpty(tasks);
+        return gui.showAllTasks(tasks);
+    }
+
+    private static void checkIfTaskListIsEmpty(TaskList tasks) throws HaruException {
         if (tasks.isEmpty()) {
             throw new HaruException.NoTasksException();
         }
-
-        return gui.showAllTasks(tasks);
     }
 }

@@ -25,13 +25,16 @@ public class DeleteCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
-        if (index >= tasks.size()) {
-            throw new HaruException.InvalidIndexException();
-        }
-
+        validateIndex(tasks, index);
         String taskInfo = tasks.get(index).getTaskInfo();
         tasks.remove(index);
         storage.updateTaskList(tasks);
         return gui.showDeletedTask(taskInfo, tasks.size());
+    }
+
+    private static void validateIndex(TaskList tasks, int index) throws HaruException {
+        if (index >= tasks.size()) {
+            throw new HaruException.InvalidIndexException();
+        }
     }
 }
