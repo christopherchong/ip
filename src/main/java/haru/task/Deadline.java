@@ -29,17 +29,17 @@ public class Deadline extends Task {
      * @param description The description of the task.
      * @param by The due date/time of the task.
      */
-    public Deadline(boolean isDone, String description, LocalDateTime by) {
-        super(description, isDone, 'D');
+    public Deadline(boolean isDone, String description, String tags, LocalDateTime by) {
+        super(description, isDone, 'D', tags);
         assert by != null : "by should not be null";
         this.by = by;
     }
 
     @Override
     public String getTaskInfo() {
-        return super.getTaskInfo()
-                + " (by: " + DateTimeUtil.formatForDisplay(by)
-                + ")";
+        return "[" + type + "] [" + getStatus() + "] " + description
+                + " (by: " + DateTimeUtil.formatForDisplay(by) + ") "
+                + tags;
     }
 
     @Override
