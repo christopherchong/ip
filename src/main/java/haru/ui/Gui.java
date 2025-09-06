@@ -107,6 +107,16 @@ public class Gui {
     }
 
     /**
+     * Displays the task in the task list that was tagged to the user.
+     *
+     * @param task The tasks to be displayed.
+     */
+    public String showTagMessage(Task task) {
+        return "Got it. I've tagged this task:\n"
+                + task.getTaskInfo();
+    }
+
+    /**
      * Displays an error message to the user.
      *
      * @param message The error message to display.
