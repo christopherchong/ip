@@ -40,13 +40,16 @@ public class Event extends Task {
 
     @Override
     public String getTaskInfo() {
-        return super.getTaskInfo() + " (from: " + DateTimeUtil.formatForDisplay(from)
-                + " to: " + DateTimeUtil.formatForDisplay(to) + ")";
+        return super.getTaskInfo()
+                + " (from: " + DateTimeUtil.formatForDisplay(from)
+                + " to: " + DateTimeUtil.formatForDisplay(to)
+                + ")";
     }
 
     @Override
     public String getTaskInfoForFile() {
-        return super.getTaskInfoForFile() + "|" + DateTimeUtil.formatForStorage(from)
+        return super.getTaskInfoForFile()
+                + "|" + DateTimeUtil.formatForStorage(from)
                 + "|" + DateTimeUtil.formatForStorage(to);
     }
 }
