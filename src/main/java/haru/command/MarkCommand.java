@@ -26,6 +26,7 @@ public class MarkCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
+        checkIfTaskListIsEmpty(tasks);
         validateIndex(tasks, index);
         Task task = tasks.get(index);
         assert task != null : "Task to mark should not be null";
@@ -33,6 +34,12 @@ public class MarkCommand extends Command {
         task.markDone();
         storage.updateTaskList(tasks);
         return gui.showMarkMessage(task);
+    }
+
+    private static void checkIfTaskListIsEmpty(TaskList tasks) throws HaruException {
+        if (tasks.isEmpty()) {
+            throw new HaruException.NoTasksException();
+        }
     }
 
     private static void validateIndex(TaskList tasks, int index) throws HaruException {

@@ -26,6 +26,7 @@ public class UnmarkCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
+        checkIfTaskListIsEmpty(tasks);
         validateIndex(tasks, index);
         Task task = tasks.get(index);
         assert task != null : "Task to unmark should not be null";
@@ -33,6 +34,12 @@ public class UnmarkCommand extends Command {
         task.markUndone();
         storage.updateTaskList(tasks);
         return gui.showUnmarkMessage(task);
+    }
+
+    private static void checkIfTaskListIsEmpty(TaskList tasks) throws HaruException {
+        if (tasks.isEmpty()) {
+            throw new HaruException.NoTasksException();
+        }
     }
 
     private static void validateIndex(TaskList tasks, int index) throws HaruException {
