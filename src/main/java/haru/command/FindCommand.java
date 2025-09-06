@@ -19,6 +19,8 @@ public class FindCommand extends Command {
      * @param description The description of the task.
      */
     public FindCommand(String description) {
+        assert description != null && !description.isBlank()
+                : "Find command description should not be null or blank";
         this.description = description;
     }
 
