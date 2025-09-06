@@ -98,6 +98,7 @@ public class Gui {
         } else {
             sb.append("Here are the matching tasks in your list:\n");
             sb.append(taskList);
+            sb.deleteCharAt(sb.lastIndexOf("\n"));
         }
         return sb.toString();
     }
