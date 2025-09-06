@@ -22,9 +22,11 @@ public class EventParser {
     public static Command parse(String arguments) throws HaruException {
         validateFormat(arguments);
         String[] eventArguments = arguments.split(" /from ", 2);
+        assert eventArguments.length == 2 : "eventArguments should split into description and dates";
         String description = eventArguments[0];
         String datesArray = eventArguments[1];
         String[] dates = datesArray.split(" /to ", 2);
+        assert dates.length == 2 : "dates should split into 'from' and 'to' datetime";
         LocalDateTime from = DateTimeUtil.parseInput(dates[0]);
         LocalDateTime to = DateTimeUtil.parseInput(dates[1]);
         validateDateOrder(from, to);

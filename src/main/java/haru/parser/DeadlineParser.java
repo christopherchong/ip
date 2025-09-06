@@ -22,6 +22,7 @@ public class DeadlineParser {
     public static Command parse(String arguments) throws HaruException {
         validateFormat(arguments);
         String[] deadlineArguments = arguments.split(" /by ", 2);
+        assert deadlineArguments.length == 2 : "deadlineArguments should split into description and 'by' datetime";
         String deadlineDescription = deadlineArguments[0];
         LocalDateTime by = DateTimeUtil.parseInput(deadlineArguments[1]);
         return new AddCommand(new Deadline(deadlineDescription, by));
