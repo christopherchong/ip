@@ -28,12 +28,14 @@ public class FindCommand extends Command {
         }
 
         StringBuilder taskList = new StringBuilder();
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getTaskInfo().contains(description)) {
-                String task = (i + 1) + ". " + tasks.get(i).getTaskInfo() + "\n";
+        int taskCount = tasks.size();
+        for (int i = 0; i < taskCount; i++) {
+            String currentTaskInfo = tasks.get(i).getTaskInfo();
+            if (currentTaskInfo.contains(description)) {
+                String task = (i + 1) + ". " + currentTaskInfo + "\n";
                 taskList.append(task);
             }
         }
-        return gui.showTaskList(taskList);
+        return gui.showSpecifiedTasks(taskList);
     }
 }
