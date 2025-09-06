@@ -25,8 +25,8 @@ public class Parser {
      *     <li>{@code deadline <description> /by <date time>}</li>
      *     <li>{@code event <description> /from <date time> /to <date time>}</li>
      *     <li>{@code delete <index>}</li>
-     *     <li>{@code bye}</li>
      *     <li>{@code find <description>}</li>
+     *     <li>{@code bye}</li>
      * </ul>
      *
      * @param input The input to be parsed.
@@ -34,9 +34,9 @@ public class Parser {
      * @throws HaruException If the input is invalid, incomplete, or formatted incorrectly.
      */
     public static Command parse(String input) throws HaruException {
-        String[] parsed = parseInput(input);
-        String command = parsed[0];
-        String arguments = parsed[1];
+        String[] inputArray = parseInput(input);
+        String command = inputArray[0];
+        String arguments = inputArray[1];
 
         return switch (command) {
         case "list" -> new ListCommand();
