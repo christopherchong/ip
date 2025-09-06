@@ -83,7 +83,6 @@ public class Parser {
                 throw new HaruException.InvalidDeadlineException();
             }
             String[] deadlineArguments = arguments.split(" /by ", 2);
-            assert deadlineArguments.length == 2 : "The array should store a description and 'by' datetime";
             String deadlineDescription = deadlineArguments[0];
             LocalDateTime by = DateTimeUtil.parseInput(deadlineArguments[1]);
             return new AddCommand(new Deadline(deadlineDescription, by));
@@ -94,13 +93,11 @@ public class Parser {
                 throw new HaruException.InvalidEventException();
             }
             String[] eventArguments = arguments.split(" /from ", 2);
-            assert eventArguments.length == 2 : "The array should store a description and two datetimes";
             String eventDescription = eventArguments[0];
-            String dates = eventArguments[1];
-            String[] eventDates = dates.split(" /to ", 2);
-            assert eventDates.length == 2 : "The array should store 'from' and 'to' datetime";
-            LocalDateTime from = DateTimeUtil.parseInput(eventDates[0]);
-            LocalDateTime to = DateTimeUtil.parseInput(eventDates[1]);
+            String eventDates = eventArguments[1];
+            String[] dates = eventDates.split(" /to ", 2);
+            LocalDateTime from = DateTimeUtil.parseInput(dates[0]);
+            LocalDateTime to = DateTimeUtil.parseInput(dates[1]);
             if (to.isBefore(from)) {
                 throw new HaruException.DateTimeOrderException();
             } else if (to.isEqual(from)) {
