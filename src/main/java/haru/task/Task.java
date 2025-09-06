@@ -52,6 +52,10 @@ public class Task {
         return "[" + type + "] [" + getStatus() + "] " + description + " " + tags;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
     /** Marks the task as completed. */
     public void markDone() {
         this.isDone = true;

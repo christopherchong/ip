@@ -1,6 +1,7 @@
 package haru.command;
 
 import java.io.IOException;
+import java.util.List;
 
 import haru.HaruException;
 import haru.storage.Storage;
@@ -55,7 +56,8 @@ public class TagCommand extends Command {
     }
 
     private static void validateTag(Task task, String tag) throws HaruException {
-        if (task.getTaskInfo().contains(" " + tag + " ")) {
+        List<String> tagList = List.of(task.getTags().split("\\s+"));
+        if (tagList.contains(tag)) {
             throw new HaruException.ExistingTagException(tag);
         }
     }
