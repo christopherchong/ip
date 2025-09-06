@@ -2,14 +2,12 @@ package haru;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import haru.command.Command;
 import haru.parser.Parser;
 import haru.storage.Storage;
 import haru.task.TaskList;
 import haru.ui.Gui;
-import haru.ui.Ui;
 
 /**
  * Entry point of the Haru task manager application.
@@ -22,7 +20,6 @@ import haru.ui.Ui;
 public class Haru {
     private final Storage storage;
     private TaskList tasks;
-    private final Ui ui;
     private final Gui gui;
 
     /**
@@ -31,7 +28,6 @@ public class Haru {
      * @param filePath The file path to the task file.
      */
     public Haru(Path filePath) {
-        ui = new Ui();
         gui = new Gui();
         storage = new Storage(filePath);
 
@@ -39,38 +35,9 @@ public class Haru {
             storage.verifyTaskFile();
             tasks = new TaskList(storage.loadTaskList());
         } catch (HaruException | IOException e) {
-            ui.showError(e.getMessage());
+            gui.showError(e.getMessage());
             tasks = new TaskList(); // overwrites corrupted haru.txt
         }
-    }
-
-    /**
-     * Starts the main program loop for Haru (in the Text UI).
-     * Displays the welcome message, processes user commands,
-     * and runs until the exit command is provided.
-     */
-    public void run() {
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String input = ui.readCommand();
-                Command c = Parser.parse(input);
-                c.execute(tasks, ui, storage);
-                isExit = c.isExit();
-            } catch (HaruException | IOException e) {
-                ui.showError(e.getMessage());
-            }
-        }
-    }
-
-    /**
-     * Entry point of the application.
-     *
-     * @param args Command-line arguments.
-     */
-    public static void main(String[] args) {
-        Path filePath = Paths.get("src", "data", "haru.txt");
-        new Haru(filePath).run();
     }
 
     /**

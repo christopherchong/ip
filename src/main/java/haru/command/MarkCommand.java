@@ -7,7 +7,6 @@ import haru.storage.Storage;
 import haru.task.Task;
 import haru.task.TaskList;
 import haru.ui.Gui;
-import haru.ui.Ui;
 
 /**
  * Represents a command that marks a task in the task list.
@@ -23,20 +22,6 @@ public class MarkCommand extends Command {
      */
     public MarkCommand(int index) {
         this.index = index;
-    }
-
-    @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws HaruException, IOException {
-        if (index >= tasks.size()) {
-            throw new HaruException.InvalidIndexException();
-        }
-        Task task = tasks.get(index);
-        if (task.getStatus().equals("X")) {
-            throw new HaruException.MarkException();
-        }
-        task.markDone();
-        storage.updateTaskList(tasks);
-        ui.showMarkMessage(task);
     }
 
     @Override
