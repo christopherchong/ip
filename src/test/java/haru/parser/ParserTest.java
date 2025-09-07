@@ -9,9 +9,12 @@ import haru.HaruException;
 import haru.command.AddCommand;
 import haru.command.Command;
 import haru.command.DeleteCommand;
+import haru.command.FindCommand;
 import haru.command.ListCommand;
 import haru.command.MarkCommand;
+import haru.command.TagCommand;
 import haru.command.UnmarkCommand;
+import haru.command.UntagCommand;
 
 public class ParserTest {
     // list
@@ -165,6 +168,104 @@ public class ParserTest {
     void parseDeleteWithoutNumber2_throwsHaruException() {
         assertThrows(HaruException.NumberFormatException.class, () -> {
             Parser.parse("delete e");
+        });
+    }
+
+    // find
+    @Test
+    void parseFindCommand_returnsFindCommand() throws HaruException {
+        Command cmd = Parser.parse("find book");
+        assertTrue(cmd instanceof FindCommand);
+    }
+
+    @Test
+    void parseFindWithoutKeyword_throwsHaruException() {
+        assertThrows(HaruException.InvalidFindException.class, () -> {
+            Parser.parse("find");
+        });
+    }
+
+    // tag
+    @Test
+    void parseTagCommand_returnsTagCommand() throws HaruException {
+        Command cmd = Parser.parse("tag 1 #test");
+        assertTrue(cmd instanceof TagCommand);
+    }
+
+    @Test
+    void parseTagWithNoArguments_throwsHaruException() {
+        assertThrows(HaruException.NoTagException.class, () -> {
+            Parser.parse("tag");
+        });
+    }
+
+    @Test
+    void parseTagWithNoIndex_throwsHaruException() {
+        assertThrows(HaruException.NoTagException.class, () -> {
+            Parser.parse("tag #test");
+        });
+    }
+
+    @Test
+    void parseTagWithInvalidIndex_throwsHaruException() {
+        assertThrows(HaruException.InvalidTagFormatException.class, () -> {
+            Parser.parse("tag e #test");
+        });
+    }
+
+    @Test
+    void parseTagWithNoTag_throwsHaruException() {
+        assertThrows(HaruException.NoTagException.class, () -> {
+            Parser.parse("tag 1");
+        });
+    }
+
+    @Test
+    void parseTagWithInvalidTag_throwsHaruException() {
+        assertThrows(HaruException.InvalidTagFormatException.class, () -> {
+            Parser.parse("tag 1 test");
+        });
+    }
+
+    // untag
+    @Test
+    void parseUntagCommand_returnsUntagCommand() throws HaruException {
+        Command cmd = Parser.parse("untag 1 #test");
+        assertTrue(cmd instanceof UntagCommand);
+    }
+
+    @Test
+    void parseUntagWithNoArguments_throwsHaruException() {
+        assertThrows(HaruException.NoTagException.class, () -> {
+            Parser.parse("untag");
+        });
+    }
+
+    @Test
+    void parseUntagWithNoIndex_throwsHaruException() {
+        assertThrows(HaruException.NoTagException.class, () -> {
+            Parser.parse("untag #test");
+        });
+    }
+
+    @Test
+    void parseUntagWithInvalidIndex_throwsHaruException() {
+        assertThrows(HaruException.InvalidTagFormatException.class, () -> {
+            Parser.parse("untag e #test");
+        });
+    }
+
+    @Test
+    void parseUntagWithNoTag_throwsHaruException() {
+        assertThrows(HaruException.NoTagException.class, () -> {
+            Parser.parse("untag 1");
+        });
+    }
+
+    @Test
+    void parseUntagWithInvalidTag_throwsHaruException() {
+        assertThrows(HaruException.InvalidTagFormatException.class, () -> {
+            Parser.parse("untag 1 test");
         });
     }
 

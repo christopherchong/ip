@@ -154,4 +154,40 @@ public class HaruException extends Exception {
             super("No description was provided. Enter a keyword!");
         }
     }
+
+    /**
+     * Thrown when invalid tag format was provided in the tag command.
+     */
+    public static class InvalidTagFormatException extends HaruException {
+        public InvalidTagFormatException() {
+            super("Invalid tag format provided!\n" + "Try doing \"tag <index> <tag name>\"");
+        }
+    }
+
+    /**
+     * Thrown when no tag was provided in the tag command.
+     */
+    public static class NoTagException extends HaruException {
+        public NoTagException() {
+            super("No tag was provided. Enter a tag!");
+        }
+    }
+
+    /**
+     * Thrown when no tag was provided in the tag command.
+     */
+    public static class ExistingTagException extends HaruException {
+        public ExistingTagException(String tag) {
+            super("The task already has a " + tag + " tag!");
+        }
+    }
+
+    /**
+     * Thrown when tag provided to untag does not exist in the task.
+     */
+    public static class NoExistingTagException extends HaruException {
+        public NoExistingTagException(String tag) {
+            super("The task does not have a " + tag + " tag!");
+        }
+    }
 }

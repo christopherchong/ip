@@ -33,8 +33,8 @@ public class Event extends Task {
      * @param from The start date/time of the event.
      * @param to The end date/time of the event.
      */
-    public Event(boolean isDone, String description, LocalDateTime from, LocalDateTime to) {
-        super(description, isDone, 'E');
+    public Event(boolean isDone, String description, String tags, LocalDateTime from, LocalDateTime to) {
+        super(description, isDone, 'E', tags);
         assert from != null && to != null : "from or to should not be null";
         this.from = from;
         this.to = to;
@@ -42,10 +42,10 @@ public class Event extends Task {
 
     @Override
     public String getTaskInfo() {
-        return super.getTaskInfo()
+        return "[" + type + "] [" + getStatus() + "] " + description
                 + " (from: " + DateTimeUtil.formatForDisplay(from)
-                + " to: " + DateTimeUtil.formatForDisplay(to)
-                + ")";
+                + " to: " + DateTimeUtil.formatForDisplay(to) + ") "
+                + tags;
     }
 
     @Override

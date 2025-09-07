@@ -73,19 +73,20 @@ public class Storage {
                 char taskType = task.charAt(0);
                 boolean isDone = arguments[1].equals("1");
                 String description = arguments[2];
+                String tags = arguments[3];
 
                 switch (taskType) {
                 case 'T':
-                    tasks.add(new Todo(isDone, description));
+                    tasks.add(new Todo(isDone, description, tags));
                     break;
                 case 'D':
-                    LocalDateTime by = DateTimeUtil.parseStorage(arguments[3]);
-                    tasks.add(new Deadline(isDone, description, by));
+                    LocalDateTime by = DateTimeUtil.parseStorage(arguments[4]);
+                    tasks.add(new Deadline(isDone, description, tags, by));
                     break;
                 case 'E':
-                    LocalDateTime from = DateTimeUtil.parseStorage(arguments[3]);
-                    LocalDateTime to = DateTimeUtil.parseStorage(arguments[4]);
-                    tasks.add(new Event(isDone, description, from, to));
+                    LocalDateTime from = DateTimeUtil.parseStorage(arguments[4]);
+                    LocalDateTime to = DateTimeUtil.parseStorage(arguments[5]);
+                    tasks.add(new Event(isDone, description, tags, from, to));
                     break;
                 default:
                     throw new HaruException.CorruptedFileException();

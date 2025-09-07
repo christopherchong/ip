@@ -26,6 +26,7 @@ public class Parser {
      *     <li>{@code event <description> /from <date time> /to <date time>}</li>
      *     <li>{@code delete <index>}</li>
      *     <li>{@code find <description>}</li>
+     *     <li>{@code tag <index> <tag name>}</li>
      *     <li>{@code bye}</li>
      * </ul>
      *
@@ -46,6 +47,7 @@ public class Parser {
         case "event" -> EventParser.parse(arguments);
         case "delete" -> DeleteParser.parse(arguments);
         case "find" -> FindParser.parse(arguments);
+        case "tag", "untag" -> TagParser.parse(arguments, command);
         case "bye" -> new ExitCommand();
         default -> throw new HaruException.InvalidCommandException();
         };
