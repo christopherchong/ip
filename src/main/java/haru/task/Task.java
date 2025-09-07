@@ -90,9 +90,13 @@ public class Task {
      * @param tag The name of the tag.
      */
     public void untag(String tag) {
-        List<String> tagList = new ArrayList<>(Arrays.asList(this.tags.split("\\s+")));
-        tagList.remove(tag);
-        this.tags = String.join(" ", tagList);
+        if (this.tags.equals(tag)) {
+            this.tags = " ";
+        } else {
+            List<String> tagList = new ArrayList<>(Arrays.asList(this.tags.split("\\s+")));
+            tagList.remove(tag);
+            this.tags = String.join(" ", tagList);
+        }
     }
 
     /**
