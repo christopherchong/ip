@@ -49,8 +49,8 @@ public class Storage {
         Path folderPath = filePath.getParent();
         if (!Files.exists(folderPath)) {
             Files.createDirectories(folderPath);
-        }
-        if (!Files.exists(filePath)) {
+            Files.createFile(filePath);
+        } else if (!Files.exists(filePath)) {
             Files.createFile(filePath);
         }
     }
