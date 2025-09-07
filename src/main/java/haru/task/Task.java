@@ -1,5 +1,9 @@
 package haru.task;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Represents a generic task with a description, type, and completion status.
  * <p>
@@ -78,6 +82,17 @@ public class Task {
         } else {
             this.tags += " " + tag;
         }
+    }
+
+    /**
+     * Removes a {@code tag} in the current task.
+     *
+     * @param tag The name of the tag.
+     */
+    public void untag(String tag) {
+        List<String> tagList = new ArrayList<>(Arrays.asList(this.tags.split("\\s+")));
+        tagList.remove(tag);
+        this.tags = String.join(" ", tagList);
     }
 
     /**

@@ -47,7 +47,7 @@ public class Parser {
         case "event" -> EventParser.parse(arguments);
         case "delete" -> DeleteParser.parse(arguments);
         case "find" -> FindParser.parse(arguments);
-        case "tag" -> TagParser.parse(arguments);
+        case "tag", "untag" -> TagParser.parse(arguments, command);
         case "bye" -> new ExitCommand();
         default -> throw new HaruException.InvalidCommandException();
         };

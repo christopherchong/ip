@@ -111,8 +111,18 @@ public class Gui {
      *
      * @param task The tasks to be displayed.
      */
-    public String showTagMessage(Task task) {
-        return "Got it. I've tagged this task:\n"
+    public String showTagMessage(Task task, String tag) {
+        return "Got it. I've tagged this task " + tag + "\n"
+                + task.getTaskInfo();
+    }
+
+    /**
+     * Displays the task in the task list that was untagged to the user.
+     *
+     * @param task The tasks to be displayed.
+     */
+    public String showUntagMessage(Task task, String tag) {
+        return "Got it. I've removed the " + tag + " tag from this task\n"
                 + task.getTaskInfo();
     }
 

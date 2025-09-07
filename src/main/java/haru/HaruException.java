@@ -178,7 +178,16 @@ public class HaruException extends Exception {
      */
     public static class ExistingTagException extends HaruException {
         public ExistingTagException(String tag) {
-            super("The task is already tagged " + tag + "!");
+            super("The task already has a " + tag + " tag!");
+        }
+    }
+
+    /**
+     * Thrown when tag provided to untag does not exist in the task.
+     */
+    public static class NoExistingTagException extends HaruException {
+        public NoExistingTagException(String tag) {
+            super("The task does not have a " + tag + " tag!");
         }
     }
 }

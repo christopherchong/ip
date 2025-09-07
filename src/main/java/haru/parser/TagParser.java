@@ -3,6 +3,7 @@ package haru.parser;
 import haru.HaruException;
 import haru.command.Command;
 import haru.command.TagCommand;
+import haru.command.UntagCommand;
 
 /**
  * Parses {@code Tag} input and converts it into an {@link TagCommand}.
@@ -15,13 +16,16 @@ public class TagParser {
      * @return the corresponding {@code TagCommand} object.
      * @throws HaruException If the input is invalid.
      */
-    public static Command parse(String arguments) throws HaruException {
+    public static Command parse(String arguments, String command) throws HaruException {
         checkForEmptyArguments(arguments);
         String[] argumentArray = arguments.split(" ");
         validateFormat(argumentArray[0], argumentArray[1]);
         int index = Integer.parseInt(argumentArray[0]) - 1;
         String tag = argumentArray[1];
-        return new TagCommand(index, tag);
+        if (command.equals("tag")) {
+            return new TagCommand(index, tag);
+        }
+        return new UntagCommand(index, tag);
     }
 
     private static void checkForEmptyArguments(String arguments) throws HaruException {
