@@ -15,7 +15,7 @@ import haru.ui.Gui;
 public class TagCommand extends Command {
     /** Tag to tag tasks in the task list by. */
     private final String tag;
-    /** Index of the task in the task list to be marked. */
+    /** Index of the task in the task list to be tagged. */
     private final int index;
 
     /**
@@ -32,15 +32,14 @@ public class TagCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
-        // tag 1 #work #play
         checkIfTaskListIsEmpty(tasks);
         validateIndex(tasks, index);
         Task task = tasks.get(index);
-        assert task != null : "Task to mark should not be null";
+        assert task != null : "Task to tag should not be null";
         validateTag(task, tag);
         task.tag(tag);
         storage.updateTaskList(tasks);
-        return gui.showTagMessage(task);
+        return gui.showTagMessage(task, tag);
     }
 
     private static void checkIfTaskListIsEmpty(TaskList tasks) throws HaruException {

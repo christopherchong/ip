@@ -37,7 +37,7 @@ class TagCommandTest {
     void execute_tagsTaskSuccessfully() throws HaruException, IOException {
         TagCommand tag = new TagCommand(1, "#fun");
         tag.execute(tasks, gui, storage);
-        assertTrue(tasks.get(1).getTaskInfo().contains("fun"), "Task should be tagged #fun");
+        assertTrue(tasks.get(1).getTags().contains("#fun"), "Task should be tagged #fun");
     }
 
     @Test
