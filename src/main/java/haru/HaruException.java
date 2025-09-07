@@ -57,6 +57,15 @@ public class HaruException extends Exception {
     }
 
     /**
+     * Thrown when arguments are provided in the list command.
+     */
+    public static class InvalidListException extends HaruException {
+        public InvalidListException() {
+            super("To list tasks in the task list, enter \"list\"");
+        }
+    }
+
+    /**
      * Thrown when there is no tasks in the task list.
      */
     public static class NoTasksException extends HaruException {
@@ -179,6 +188,15 @@ public class HaruException extends Exception {
     public static class ExistingTagException extends HaruException {
         public ExistingTagException(String tag) {
             super("The task already has a " + tag + " tag!");
+        }
+    }
+
+    /**
+     * Thrown when arguments are provided in the bye command.
+     */
+    public static class InvalidByeException extends HaruException {
+        public InvalidByeException() {
+            super("To exit the program, enter \"bye\"");
         }
     }
 

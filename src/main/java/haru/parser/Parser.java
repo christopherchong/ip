@@ -2,8 +2,6 @@ package haru.parser;
 
 import haru.HaruException;
 import haru.command.Command;
-import haru.command.ExitCommand;
-import haru.command.ListCommand;
 
 /**
  * Parses user input and converts it into an executable {@link Command}.
@@ -40,7 +38,7 @@ public class Parser {
         String arguments = inputArray[1];
 
         return switch (command) {
-        case "list" -> new ListCommand();
+        case "list" -> ListParser.parse(arguments);
         case "mark", "unmark" -> MarkParser.parse(arguments, command);
         case "todo" -> TodoParser.parse(arguments);
         case "deadline" -> DeadlineParser.parse(arguments);
@@ -48,7 +46,7 @@ public class Parser {
         case "delete" -> DeleteParser.parse(arguments);
         case "find" -> FindParser.parse(arguments);
         case "tag", "untag" -> TagParser.parse(arguments, command);
-        case "bye" -> new ExitCommand();
+        case "bye" -> ByeParser.parse(arguments);
         default -> throw new HaruException.InvalidCommandException();
         };
     }

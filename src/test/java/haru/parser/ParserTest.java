@@ -9,6 +9,7 @@ import haru.HaruException;
 import haru.command.AddCommand;
 import haru.command.Command;
 import haru.command.DeleteCommand;
+import haru.command.ExitCommand;
 import haru.command.FindCommand;
 import haru.command.ListCommand;
 import haru.command.MarkCommand;
@@ -22,6 +23,12 @@ public class ParserTest {
     void parseListCommand_returnsListCommand() throws HaruException {
         Command cmd = Parser.parse("list");
         assertInstanceOf(ListCommand.class, cmd);
+    }
+
+    @Test
+    void parseListWithArguments_throwsHaruException() {
+        assertThrows(HaruException.InvalidListException.class, () ->
+                Parser.parse("list test"));
     }
 
     // mark
@@ -241,6 +248,19 @@ public class ParserTest {
     void parseUntagWithInvalidTag_throwsHaruException() {
         assertThrows(HaruException.InvalidTagFormatException.class, () ->
                 Parser.parse("untag 1 test"));
+    }
+
+    // bye
+    @Test
+    void parseExitCommand_returnsExitCommand() throws HaruException {
+        Command cmd = Parser.parse("bye");
+        assertInstanceOf(ExitCommand.class, cmd);
+    }
+
+    @Test
+    void parseExitWithArguments_throwsHaruException() {
+        assertThrows(HaruException.InvalidByeException.class, () ->
+                Parser.parse("bye bye"));
     }
 
     // invalid command
