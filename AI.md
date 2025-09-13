@@ -8,3 +8,4 @@ classes into packages.
 - JUnit: generated example test cases to get an idea of how to write test cases.
 - JavaDoc: generated example Javadoc comments to get an idea on the syntax and important details
 to include in a header comment.
+- Personality: modified responses and error messages to include a more bubbly and cheerful personality
