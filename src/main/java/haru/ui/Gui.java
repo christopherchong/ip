@@ -15,14 +15,14 @@ public class Gui {
      * Displays the welcome message when the application starts.
      */
     public String showWelcomeMessage() {
-        return "Hello! I'm Haru\nWhat can I do for you?";
+        return "Hiya! I'm Haru Urara!\nWhat would you like me to do today?";
     }
 
     /**
      * Displays the exit message when the application ends.
      */
     public String showExitMessage() {
-        return "Bye. Hope to see you again soon!";
+        return "Bye-bye! Can't wait to chat with you again soon!";
     }
 
     /**
@@ -31,7 +31,7 @@ public class Gui {
      * @param task The task that was marked.
      */
     public String showMarkMessage(Task task) {
-        return "Nice! I've marked this task as done:\n"
+        return "Yay! I've marked this task as done!\n"
                 + task.getTaskInfo();
     }
 
@@ -41,7 +41,7 @@ public class Gui {
      * @param task The task that was unmarked.
      */
     public String showUnmarkMessage(Task task) {
-        return "Got it! I've marked this task as not done yet:\n"
+        return "No worries! I've marked this task as not done yet\n"
                 + task.getTaskInfo();
     }
 
@@ -59,9 +59,8 @@ public class Gui {
             sb.append(task);
         }
         sb.deleteCharAt(sb.lastIndexOf("\n"));
-        return sb.toString();
+        return "Here are all your tasks compiled!\n" + sb;
     }
-
 
     /**
      * Displays a confirmation message that a task has been added, along with the
@@ -71,9 +70,9 @@ public class Gui {
      * @param taskCount The number of tasks in the task list after adding the new task.
      */
     public String showAddedTask(Task task, int taskCount) {
-        return "Got it. I've added this task:\n"
+        return "Yippee! I've added this task:\n"
                 + task.getTaskInfo() + "\n"
-                + "There are now " + taskCount + " task(s)!";
+                + "Now you have " + taskCount + " task(s)! Let's get going!";
     }
 
     /**
@@ -84,9 +83,9 @@ public class Gui {
      * @param taskCount The number of tasks in the task list after deleting the task.
      */
     public String showDeletedTask(String taskInfo, int taskCount) {
-        return "Understood! I've removed this task:\n"
+        return "Got it! I've removed this task:\n"
                 + taskInfo + "\n"
-                + "There are now " + taskCount + " task(s)!";
+                + "You now have " + taskCount + " task(s). Keep it up!";
     }
 
     /**
@@ -97,9 +96,9 @@ public class Gui {
     public String showSpecifiedTasks(StringBuilder taskList) {
         StringBuilder sb = new StringBuilder();
         if (taskList.isEmpty()) {
-            sb.append("There were no tasks matching the description!\n");
+            sb.append("Oops! There were no tasks matching that description");
         } else {
-            sb.append("Here are the matching tasks in your list:\n");
+            sb.append("Here are the tasks I found for you!\n");
             sb.append(taskList);
             sb.deleteCharAt(sb.lastIndexOf("\n"));
         }
@@ -112,7 +111,7 @@ public class Gui {
      * @param task The tasks to be displayed.
      */
     public String showTagMessage(Task task, String tag) {
-        return "Got it. I've tagged this task " + tag + "\n"
+        return "All set! I've tagged this task with '" + tag + "'\n"
                 + task.getTaskInfo();
     }
 
@@ -122,7 +121,7 @@ public class Gui {
      * @param task The tasks to be displayed.
      */
     public String showUntagMessage(Task task, String tag) {
-        return "Got it. I've removed the " + tag + " tag from this task\n"
+        return "No problemo! I've removed the '" + tag + "' tag\n"
                 + task.getTaskInfo();
     }
 

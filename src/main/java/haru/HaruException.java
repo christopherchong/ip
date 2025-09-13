@@ -34,7 +34,7 @@ public class HaruException extends Exception {
      */
     public static class CorruptedFileException extends HaruException {
         public CorruptedFileException() {
-            super("The task file is corrupted!");
+            super("Oh no! It looks like the task file got corrupted! Let's try to fix it.");
         }
     }
 
@@ -43,7 +43,7 @@ public class HaruException extends Exception {
      */
     public static class InvalidCommandException extends HaruException {
         public InvalidCommandException() {
-            super("I don't recognize that command :(");
+            super("Hmm, I don't recognize that command. Let's try something else!");
         }
     }
 
@@ -52,7 +52,7 @@ public class HaruException extends Exception {
      */
     public static class NumberFormatException extends HaruException {
         public NumberFormatException() {
-            super("A number was not entered! :(");
+            super("Oops! There wasn't a number. Could you try entering a number?");
         }
     }
 
@@ -61,7 +61,7 @@ public class HaruException extends Exception {
      */
     public static class InvalidListException extends HaruException {
         public InvalidListException() {
-            super("To list tasks in the task list, enter \"list\"");
+            super("To see all tasks, just type \"list\". Easy peasy!");
         }
     }
 
@@ -70,16 +70,16 @@ public class HaruException extends Exception {
      */
     public static class NoTasksException extends HaruException {
         public NoTasksException() {
-            super("There are no tasks!");
+            super("Looks like there aren't any tasks yet! Let's add some!");
         }
     }
 
     /**
-     * Thrown when there is no tasks in the task list.
+     * Thrown when an invalid index is provided.
      */
     public static class InvalidIndexException extends HaruException {
         public InvalidIndexException() {
-            super("Number entered was invalid!");
+            super("Hmm, that number doesn't match any task. Let's check again!");
         }
     }
 
@@ -88,7 +88,7 @@ public class HaruException extends Exception {
      */
     public static class MarkException extends HaruException {
         public MarkException() {
-            super("Task is already marked!");
+            super("This task is already marked as done! No worries!");
         }
     }
 
@@ -97,7 +97,7 @@ public class HaruException extends Exception {
      */
     public static class UnmarkException extends HaruException {
         public UnmarkException() {
-            super("Task is already unmarked!");
+            super("This task is already not done. All good!");
         }
     }
 
@@ -106,7 +106,7 @@ public class HaruException extends Exception {
      */
     public static class InvalidTodoException extends HaruException {
         public InvalidTodoException() {
-            super("The task was not entered correctly!\n" + "Try doing \"todo <task>\"");
+            super("Uh-oh! The task wasn't entered correctly.\nTry: \"todo <task>\"");
         }
     }
 
@@ -115,7 +115,7 @@ public class HaruException extends Exception {
      */
     public static class InvalidDeadlineException extends HaruException {
         public InvalidDeadlineException() {
-            super("The task was not entered correctly!\n" + "Try doing \"deadline <task> /by <date/time>\"");
+            super("Hmm, that deadline didn't look right.\nTry: \"deadline <task> /by <date/time>\"");
         }
     }
 
@@ -124,7 +124,7 @@ public class HaruException extends Exception {
      */
     public static class InvalidEventException extends HaruException {
         public InvalidEventException() {
-            super("The task was not entered correctly!\n" + "Try \"event <task> /from <date/time> /to <date/time>\"");
+            super("Oops! The event wasn't entered correctly.\nTry: \"event <task> /from <date/time> /to <date/time>\"");
         }
     }
 
@@ -133,7 +133,7 @@ public class HaruException extends Exception {
      */
     public static class DateTimeParseException extends HaruException {
         public DateTimeParseException() {
-            super("The date was not entered correctly!\n" + "Try following day/month/year time (e.g. 2/12/2019 1800)");
+            super("Hmm, the date wasn't quite right.\nTry day/month/year time (e.g., 2/12/2019 1800)");
         }
     }
 
@@ -142,7 +142,7 @@ public class HaruException extends Exception {
      */
     public static class DateTimeOrderException extends HaruException {
         public DateTimeOrderException() {
-            super("The 'to' date is earlier than the 'from' date!\n" + "Try entering the dates again!");
+            super("Oops! The 'to' date is before the 'from' date. Let's fix that!");
         }
     }
 
@@ -151,7 +151,7 @@ public class HaruException extends Exception {
      */
     public static class SameDateTimeException extends HaruException {
         public SameDateTimeException() {
-            super("The 'to' and 'from' dates are the same!\n" + "Try entering the dates again!");
+            super("The 'to' and 'from' dates are the same. Let's enter different times!");
         }
     }
 
@@ -160,7 +160,7 @@ public class HaruException extends Exception {
      */
     public static class InvalidFindException extends HaruException {
         public InvalidFindException() {
-            super("No description was provided. Enter a keyword!");
+            super("Uh-oh! You didn't provide a description. Enter a keyword to find tasks!");
         }
     }
 
@@ -169,7 +169,7 @@ public class HaruException extends Exception {
      */
     public static class InvalidTagFormatException extends HaruException {
         public InvalidTagFormatException() {
-            super("Invalid tag format provided!\n" + "Try doing \"tag <index> <tag name>\"");
+            super("Hmm, that tag format isn't right.\nTry: \"tag <index> #<tag name>\"");
         }
     }
 
@@ -178,25 +178,16 @@ public class HaruException extends Exception {
      */
     public static class NoTagException extends HaruException {
         public NoTagException() {
-            super("No tag was provided. Enter a tag!");
+            super("Looks like you didn't provide a tag. Let's try again!");
         }
     }
 
     /**
-     * Thrown when no tag was provided in the tag command.
+     * Thrown when a tag already exists for a task.
      */
     public static class ExistingTagException extends HaruException {
         public ExistingTagException(String tag) {
-            super("The task already has a " + tag + " tag!");
-        }
-    }
-
-    /**
-     * Thrown when arguments are provided in the bye command.
-     */
-    public static class InvalidByeException extends HaruException {
-        public InvalidByeException() {
-            super("To exit the program, enter \"bye\"");
+            super("This task already has a " + tag + " tag! No worries though.");
         }
     }
 
@@ -205,7 +196,16 @@ public class HaruException extends Exception {
      */
     public static class NoExistingTagException extends HaruException {
         public NoExistingTagException(String tag) {
-            super("The task does not have a " + tag + " tag!");
+            super("Hmm, this task doesn't have a " + tag + " tag. Let's check again!");
+        }
+    }
+
+    /**
+     * Thrown when arguments are provided in the bye command.
+     */
+    public static class InvalidByeException extends HaruException {
+        public InvalidByeException() {
+            super("To exit the program, just type \"bye\". Got it?");
         }
     }
 }
