@@ -45,8 +45,9 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
-        String input = userInput.getText().trim();
-        String response = haru.getResponse(input);
+        String input = userInput.getText();
+        String normalizedInput = input.trim().replaceAll("\\s{2,}", " ");
+        String response = haru.getResponse(normalizedInput);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getHaruDialog(response, haruImage)
