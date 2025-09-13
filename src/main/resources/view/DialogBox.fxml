@@ -20,8 +20,8 @@
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
         <font>
-        <Font name="Calibri" size="18.0"/>
+        <Font name="Yu Gothic UI" size="16.0"/>
         </font>
     </Label>
-    <ImageView fx:id="displayPicture" fitHeight="99.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true"/>
+    <ImageView fx:id="displayPicture" fitHeight="90.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true"/>
 </fx:root>
