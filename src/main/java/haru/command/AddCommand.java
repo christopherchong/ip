@@ -2,6 +2,7 @@ package haru.command;
 
 import java.io.IOException;
 
+import haru.HaruException;
 import haru.storage.Storage;
 import haru.task.Task;
 import haru.task.TaskList;
@@ -24,9 +25,20 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public String execute(TaskList tasks, Gui gui, Storage storage) throws IOException {
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws HaruException, IOException {
+        checkForDuplicateTask(tasks, task);
         tasks.add(task);
         storage.updateTaskList(tasks);
         return gui.showAddedTask(task, tasks.size());
+    }
+
+    private static void checkForDuplicateTask(TaskList tasks, Task task) throws HaruException {
+        String taskInfo = task.getTaskInfo();
+        for (int i = 0; i < tasks.size(); i++) {
+            String currentTaskInfo = tasks.get(i).getTaskInfo();
+            if (currentTaskInfo.equals(taskInfo)) {
+                throw new HaruException.DuplicateTaskException();
+            }
+        }
     }
 }

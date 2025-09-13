@@ -93,6 +93,15 @@ public class HaruException extends Exception {
     }
 
     /**
+     * Thrown when the task to be added is in the task list.
+     */
+    public static class DuplicateTaskException extends HaruException {
+        public DuplicateTaskException() {
+            super("This task is already in the list. All good!");
+        }
+    }
+
+    /**
      * Thrown when the task to be unmarked was already unmarked.
      */
     public static class UnmarkException extends HaruException {
