@@ -1,2 +1,4 @@
-T|1|borrow book
-D|0|assignment|2025-12-02 18:00
+D|0|project| |2025-02-28 18:00
+T|1|tutorial|#st2334
+T|0|lecture|#st2334
+E|0|meeting|#cs2103t|2025-09-14 14:00|2025-09-14 15:00
