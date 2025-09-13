@@ -16,7 +16,7 @@
     -fx-background-color: #FF69B4;  /* vibrant pink */
     -fx-text-fill: white;
     -fx-font: italic bold 18px "Yu Gothic UI";
-    -fx-background-radius: 1em;
+    -fx-background-radius: 0.5em;
 }
 
 .button:hover {
