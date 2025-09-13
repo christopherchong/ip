@@ -33,7 +33,14 @@ public class DialogBox extends HBox {
         }
 
         dialog.setText(text);
+        dialog.setWrapText(true); // ensure text wraps
         displayPicture.setImage(img);
+
+        this.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                dialog.maxWidthProperty().bind(newScene.widthProperty().multiply(0.6));
+            }
+        });
     }
 
     /**
