@@ -27,7 +27,7 @@ deadlines! Haru is optimized for use via a Command Line Interface (CLI) while st
 Ensure you have Java `17` or above installed in your Computer.
 Mac users: Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-Download the latest `.jar` file from [here](https://github.com/christopherchong/ip/releases/tag/A-Jar).
+Download the latest `.jar` file from [here](https://github.com/christopherchong/ip/releases/tag/v0.2).
 
 Copy the file to the folder you want to use as the home folder for your task manager.
 
